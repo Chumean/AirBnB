@@ -15,7 +15,7 @@
 All endpoints that require a current user to be logged in.
 
 
-![](https://res.cloudinary.com/dsu4khzr3/image/upload/v1673411128/schema_fgb8rs.png)
+![](https://res.cloudinary.com/dsu4khzr3/image/upload/v1674189434/schema3_cvwbrk.png)
 
 * updated schema 1/11/2023
 

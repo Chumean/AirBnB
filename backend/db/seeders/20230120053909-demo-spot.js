@@ -44,7 +44,7 @@ module.exports = {
         "price": 222,
         // "createdAt": "2021-11-19 20:39:36",
         // "updatedAt": "2021-11-19 20:39:36",
-        "avgRating": 4.5,
+        "avgRating": 2.7,
         "previewImage": "image url"
       },
 
@@ -61,7 +61,7 @@ module.exports = {
         "price": 333,
         // "createdAt": "2021-11-19 20:39:36",
         // "updatedAt": "2021-11-19 20:39:36",
-        "avgRating": 4.5,
+        "avgRating": 1.5,
         "previewImage": "image url"
       }
     ], {});
@@ -78,7 +78,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Spots';
-    return queryInterface.bulkDelete(options)
+    return queryInterface.bulkDelete(options, {})
     /**
      * Add commands to revert seed here.
      *

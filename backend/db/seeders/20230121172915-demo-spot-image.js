@@ -9,25 +9,28 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     options.tableName = 'SpotImages';
     await queryInterface.bulkInsert(options, [
-      
+      {
+        "url": "www.google.com/images",
+        "preview": true,
+        "spotId": 1
+      },
+      {
+        "url": "www.google.com/images",
+        "preview": true,
+        "spotId": 2
+      },
+      {
+        "url": "www.google.com/images",
+        "preview": false,
+        "spotId": 3
+      }
     ])
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    options.tableName = 'SpotImages';
+    return queryInterface.bulkDelete(options, {});
+   
   }
 };

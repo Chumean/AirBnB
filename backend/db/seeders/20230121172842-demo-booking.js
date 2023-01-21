@@ -10,15 +10,19 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     options.tableName = 'Bookings';
     await queryInterface.bulkInsert(options, [
-      {
+      { "spotId": 1,
+        "userId": 1,
         "startDate": "2021-11-19",
         "endDate": "2021-11-20"
       },
-      {
+      { "spotId": 2,
+        "userId": 2,
         "startDate": "2021-02-19",
         "endDate": "2021-02-20"
       },
       {
+        "spotId": 3,
+        "userId": 3,
         "startDate": "2021-03-19",
         "endDate": "2021-03-20"
       }
@@ -36,7 +40,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Bookings';
-    await queryInterface.bulkDelete(options)
+    return queryInterface.bulkDelete(options, {})
     /**
      * Add commands to revert seed here.
      *

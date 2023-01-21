@@ -8,21 +8,6 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 /** @type {import('sequelize-cli').Migration} */
-// module.exports = {
-//   async up (queryInterface, Sequelize) {
-
-//   },
-
-//   async down (queryInterface, Sequelize) {
-//     /**
-//      * Add commands to revert seed here.
-//      *
-//      * Example:
-//      * await queryInterface.bulkDelete('People', null, {});
-//      */
-//   }
-// };
-
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -60,3 +45,17 @@ module.exports = {
     }, {});
   }
 };
+// module.exports = {
+//   async up (queryInterface, Sequelize) {
+
+//   },
+
+//   async down (queryInterface, Sequelize) {
+//     /**
+//      * Add commands to revert seed here.
+//      *
+//      * Example:
+//      * await queryInterface.bulkDelete('People', null, {});
+//      */
+//   }
+// };

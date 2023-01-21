@@ -13,37 +13,29 @@ module.exports = {
     options.tableName = 'Reviews';
     return queryInterface.bulkInsert(options, [
       {
+        "userId": 1,
+        "spotId": 1,
         "review": "This was an awesome spot!",
         "stars": 5,
       },
-      {
+      { "userId": 2,
+        "spotId": 2,
         "review": "meh",
         "stars": 3,
       },
       {
+        "userId": 3,
+        "spotId": 3,
         "review": "bad",
         "stars": 1,
       }
     ])
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Reviews';
-    return queryInterface.bulkDelete(options)
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    return queryInterface.bulkDelete(options, {})
+
   }
 };

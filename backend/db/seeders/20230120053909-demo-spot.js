@@ -27,8 +27,8 @@ module.exports = {
         "price": 123,
         // "createdAt": "2021-11-19 20:39:36",
         // "updatedAt": "2021-11-19 20:39:36",
-        "avgRating": 4.5,
-        "previewImage": "image url"
+        // "avgRating": 4.5,
+        // "previewImage": "image url"
       },
 
       {
@@ -44,8 +44,8 @@ module.exports = {
         "price": 222,
         // "createdAt": "2021-11-19 20:39:36",
         // "updatedAt": "2021-11-19 20:39:36",
-        "avgRating": 2.7,
-        "previewImage": "image url"
+        // "avgRating": 2.7,
+        // "previewImage": "image url"
       },
 
       {
@@ -61,19 +61,11 @@ module.exports = {
         "price": 333,
         // "createdAt": "2021-11-19 20:39:36",
         // "updatedAt": "2021-11-19 20:39:36",
-        "avgRating": 1.5,
-        "previewImage": "image url"
+        // "avgRating": 1.5,
+        // "previewImage": "image url"
       }
     ], {});
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+
   },
 
   async down (queryInterface, Sequelize) {

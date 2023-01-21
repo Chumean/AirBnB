@@ -1,6 +1,6 @@
 'use strict';
 
-const { options } = require('../../routes');
+// const { options } = require('../../routes');
 
 let options = {};
 if(process.env.NODE_ENV === 'production') {
@@ -36,6 +36,5 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'Reviews';
     return queryInterface.bulkDelete(options, {})
-
   }
 };

@@ -4,6 +4,13 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class SpotImage extends Model {
+    static async createImage({url, imageId, preview}) {
+      const newImg = await SpotImage.create({
+        url, imageId, preview
+      });
+
+      return await Image.findByPk(newImg.imageId)
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.

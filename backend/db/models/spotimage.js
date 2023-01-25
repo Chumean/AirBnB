@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         url, imageId, preview
       });
 
-      return await Image.findByPk(newImg.imageId)
+      return await SpotImage.findByPk(newImg.imageId)
     }
     /**
      * Helper method for defining associations.

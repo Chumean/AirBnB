@@ -27,11 +27,11 @@ const validateSpots = [
     .withMessage('Country is required'),
     check('lat')
     .exists({checkFalsy: true})
-    .isString()
+    .isDecimal()
     .withMessage('Latitude is not valid'),
     check('lng')
     .exists({checkFalsy: true})
-    .isString()
+    .isDecimal()
     .withMessage('Longitude is not valid'),
     check('name')
     .exists({checkFalsy: true})
@@ -96,11 +96,11 @@ router.get('/current', requireAuth, async(req, res) =>{
 });
 // Get details of a Spot From An id
 router.get('/:spotId', validateSpots, async (req, res) => {
-    let oneSpot;
+    // let oneSpot;
 
     try {
 
-        oneSpot = await Spot.findByPk(req.params.id);
+        const oneSpot = await Spot.findByPk(req.params.id);
 
         res.json(oneSpot)
     } catch (err) {
@@ -120,18 +120,18 @@ router.post('/', validateSpots, async (req, res) => {
     }
 });
 // Add an Image to a Spot based on Spot's id
-router.post('/:spotId/images', validateSpots, async(req, res) =>{
-    const spot = Spot.findByPk(req.params.spotId);
-    if(!spot) {
+router.post('/:spotId/images', async(req, res) =>{
+    const currentSpot = Spot.findByPk(req.params.spotId);
+    if(!currentSpot) {
         res.status(404);
         return res.json({message: "Spot couldn't be found", statusCode: 404});
     }
 
-        const { url, preview, imageId = spot.id} = req.body;
+        const { url, preview, imageId = currentSpot.id} = req.body;
 
-        const image = await SpotImage.createImage({ url, preview, imageId})
+        const image = await SpotImage.createImage({imageId, preview, url})
 
-        return res.json(201).json({image})
+        return res.status(201).json({image})
 });
 // Edit a Spot
 router.put('/:spotId', validateSpots, async (req, res) => {

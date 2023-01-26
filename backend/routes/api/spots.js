@@ -95,12 +95,17 @@ router.get('/current', requireAuth, async(req, res) =>{
     return res.json(ownerSpots)
 });
 // Get details of a Spot From An id
-router.get('/:spotId', validateSpots, async (req, res) => {
+router.get('/:spotId', async (req, res) => {
     // let oneSpot;
 
     try {
 
-        const oneSpot = await Spot.findByPk(req.params.id);
+        const oneSpot = await Spot.findByPk(req.params.spotId, {
+            include: [
+                {model: SpotImage},
+                {model: User}
+            ]
+        });
 
         res.json(oneSpot)
     } catch (err) {
@@ -134,12 +139,13 @@ router.post('/:spotId/images', async(req, res) =>{
         return res.status(201).json({image})
 });
 // Edit a Spot
-router.put('/:spotId', validateSpots, async (req, res) => {
-
+router.put('/:spotId', requireAuth, async (req, res) => {
+    // res.json({"Test": "One"});
     try {
 
         const { address, city, state, country, lat, lng, name, description, price } = req.body;
-        const updateSpot = await Spot.findByPk(req.params.id);
+        const updateSpot = await Spot.findByPk(req.params.spotId);
+        console.log(updateSpot);
         if(updateSpot) {
             if(address) updateSpot.address = address;
             if(city) updateSpot.city = city;
@@ -151,8 +157,9 @@ router.put('/:spotId', validateSpots, async (req, res) => {
             if(description) updateSpot.description = description;
             if(price) updateSpot.price = price;
 
-            updateSpot.save();
-            res.json({details: updateSpot})
+            await updateSpot.save();
+
+            res.json({updateSpot})
         }
     } catch (err) {
         res.status(404).json({message: "Spot couldn't be found"})
@@ -161,16 +168,22 @@ router.put('/:spotId', validateSpots, async (req, res) => {
 
 
 // Delete a Spot
-router.delete('/:spotId', validateSpots, async(req, res) => {
-    try {
-        const deleteSpot = await Spot.findByPk(req.params.id);
+router.delete('/:spotId', requireAuth, async(req, res) => {
+    // console.log("TEST")
+    // try {
+        const deleteSpot = await Spot.findByPk(req.params.spotId);
+        // console.log(deleteSpot)
         if(deleteSpot) {
+            console.log('TEST HERE')
             await deleteSpot.destroy();
             res.status(200).json({message: "Successfully deleted"})
+        } else {
+            res.status(404).json({message: "Spot couldn't be found"})
+    // }
         }
-    } catch(err) {
-        res.status(404).json({message: "Spot couldn't be found"})
-    }
+    // } catch(err) {
+        // res.status(404).json({message: "Spot couldn't be found"})
+    // }
 });
 
 

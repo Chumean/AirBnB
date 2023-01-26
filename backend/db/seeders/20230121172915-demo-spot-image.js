@@ -10,19 +10,19 @@ module.exports = {
     options.tableName = 'SpotImages';
     await queryInterface.bulkInsert(options, [
       {
-        "url": "www.google.com/images",
-        "preview": true,
-        "spotId": 1
+        url: "www.google.com/images",
+        preview: true,
+        spotId: 1
       },
       {
-        "url": "www.google.com/images",
-        "preview": true,
-        "spotId": 2
+        url: "www.google.com/images",
+        preview: true,
+        spotId: 2
       },
       {
-        "url": "www.google.com/images",
-        "preview": false,
-        "spotId": 3
+        url: "www.google.com/images",
+        preview: false,
+        spotId: 3
       }
     ])
 
@@ -31,6 +31,6 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'SpotImages';
     return queryInterface.bulkDelete(options, {});
-   
+
   }
 };

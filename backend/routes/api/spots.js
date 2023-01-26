@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { SpotImage } = require('../../db/models');
+const { SpotImage, Review, ReviewImage } = require('../../db/models');
 const { User } = require('../../db/models');
 const { Spot } = require('../../db/models');
 const { check } = require('express-validator');
@@ -186,6 +186,29 @@ router.delete('/:spotId', requireAuth, async(req, res) => {
     // }
 });
 
+// Get All Reviews by a Spot's id
+router.get('/:spotId/reviews', async (req, res) =>{
+    let reviews = [];
+    reviews = Review.findAll({
+        where: req.params.spotId,
+        attributes: [
+            "review",
+            "stars"
+        ]
+    })
+
+    return res.json(reviews);
+});
 
 
+// Create a Review for spot on Spot's id
+router.post('/:spotId/reviews', requireAuth, async (req, res) =>{
+    try {
+        const { review, stars} = req.body;
+        const newReview = await Review.create({review, stars});
+        res.json(newReview);
+    } catch (err) {
+        res.status(400).json(handleValidationErrors);
+    }
+});
 module.exports = router;

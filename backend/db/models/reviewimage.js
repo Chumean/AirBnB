@@ -4,6 +4,14 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class ReviewImage extends Model {
+
+    static async createImage({url, reviewImageId, preview}) {
+      const newReviewImage = await ReviewImage.create({
+        url, reviewImageId, preview
+      });
+
+      return await ReviewImage.findByPk(newReviewImage.reviewImageId)
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.

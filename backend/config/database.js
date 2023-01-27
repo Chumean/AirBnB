@@ -22,6 +22,7 @@ module.exports = {
     },
     define: {
       schema: process.env.SCHEMA
-    }
+    },
+    logging:true
   }
 };

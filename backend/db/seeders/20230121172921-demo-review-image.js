@@ -29,7 +29,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     options.tableName = "ReviewImages";
-    return queryInterface.bulkDelete(options, {})
+    return queryInterface.bulkDelete(options, null, {})
     /**
      * Add commands to revert seed here.
      *

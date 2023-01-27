@@ -22,21 +22,26 @@ const validateReviews = [
 
 // Get All Reviews of Current User
 router.get('/current', requireAuth, async (req, res) => {
+
     let reviews = [];
 
     reviews = await Review.findAll({
-        // where: req.params.reviewId = req.params.userId ,
-        // attributes: [
-        //     'review',
-        //     'stars'
-        // ]
-        // include: [
-        //     {model: User},
-        //     {model: Spot},
-        //     {model: ReviewImage}
-        // ]
+        attributes: {
+            include: [
+                "userId",
+                "spotId",
+                "review",
+                "stars"
+            ]
+        },
+        include: [
+            {model: User},
+            {model: Spot},
+            {model: ReviewImage}
+            ]
 
-    })
+    });
+
 
     res.json(reviews);
 })
@@ -46,16 +51,32 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Add an Image to Review on Review id
 router.post('/:reviewId/images', requireAuth, async(req, res) => {
-    const currentReview = Review.findByPk(req.params.reviewId);
+
+    const currentReview = await Review.findByPk(req.params.reviewId);
+
     if(!currentReview) {
-        res.status(404).json({message: "Review couldn't be found"})
+       return res.status(404).json({message: "Review couldn't be found", statusCode: 404})
     }
+    const findImage = await ReviewImage.findAll({
+        where: {
+            reviewId: req.params.reviewId
+        }
+    })
+    console.log(findImage)
 
-    const {url, preview, reviewImageId = currentReview.id} = req.body;
+    // if(findImage.length > 10) {
+    //     return res.status(403).json({message: "Maximum number of images for this resource was reached", statusCode: 403})
+    // }
 
-    const reviewImage = await ReviewImage.create({url, preview, reviewImageId});
+    const {url} = req.body;
 
-    return res.status(200).json({reviewImage})
+    const reviewImage = await ReviewImage.create({url, reviewId:req.params.reviewId});
+
+    const resObj = {
+        id:reviewImage.id,
+        url:reviewImage.url
+    }
+    return res.status(200).json(resObj)
 });
 
 // Edit a Review

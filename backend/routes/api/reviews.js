@@ -25,11 +25,11 @@ router.get('/current', requireAuth, async (req, res) => {
     let reviews = [];
 
     reviews = await Review.findAll({
-        where: req.params.id,
-        attributes: [
-            'review',
-            'stars'
-        ]
+        // where: req.params.reviewId = req.params.userId ,
+        // attributes: [
+        //     'review',
+        //     'stars'
+        // ]
         // include: [
         //     {model: User},
         //     {model: Spot},

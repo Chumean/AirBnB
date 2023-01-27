@@ -1,7 +1,5 @@
 'use strict';
 
-const { query } = require('express');
-const { Spot } = require('../models')
 
 let options = {};
 if(process.env.NODE_ENV === 'production') {

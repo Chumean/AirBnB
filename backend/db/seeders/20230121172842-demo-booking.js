@@ -26,7 +26,7 @@ module.exports = {
         startDate: "2021-03-19",
         endDate: "2021-03-20"
       }
-    ])
+    ], {})
     /**
      * Add seed commands here.
      *

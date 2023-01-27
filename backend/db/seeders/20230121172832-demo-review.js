@@ -29,7 +29,7 @@ module.exports = {
         review: "bad",
         stars: 1,
       }
-    ])
+    ], {})
 
   },
 

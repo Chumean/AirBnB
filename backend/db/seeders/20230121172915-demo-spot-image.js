@@ -24,7 +24,7 @@ module.exports = {
         preview: false,
         spotId: 3
       }
-    ])
+    ], {})
 
   },
 

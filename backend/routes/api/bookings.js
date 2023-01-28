@@ -87,7 +87,7 @@ router.delete('/:bookingId', requireAuth, validateBooking, async(req, res) =>{
     // grab current time
     const currentDate = new Date();
 
-    const deleteBooking = await Booking.findByPk(req.params.id, {
+    const deleteBooking = await Booking.findByPk(req.params.bookingId, {
         attributes: {
             include: ['startDate']
         }

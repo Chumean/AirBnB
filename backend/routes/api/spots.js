@@ -58,7 +58,21 @@ const validateReview = [
     .isDecimal()
     .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors
-]
+];
+
+const validateBooking = [
+    check('startDate')
+    .exists()
+    .isBefore('endDate')
+    .isString()
+    .withMessage('endDate cannot be on or before startDate'),
+    check('endDate')
+    .exists()
+    .isAfter('startDate')
+    .isString()
+    .withMessage('endDate cannot be on or before startDate'),
+    handleValidationErrors
+];
 // Get All Spots
 // to do add avgrating and preview image - DONE
 router.get('/', async (req, res) =>{
@@ -385,4 +399,21 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
         // res.status(400).json(handleValidationErrors);
 
 });
+
+
+// Get all of the Current User's Bookings (must be in spots)
+router.get('/:spotId/bookings', requireAuth, validateBooking, async(req, res) =>{
+
+});
+
+// Get all Bookings for a Spot based on Spot id (must be in spots)
+router.get('/:spotId/bookings', requireAuth, validateBooking, async(req, res) => {
+
+})
+
+// Create a Booking from a Spot based on Spot's id (must be in spots)
+router.get('/api/spots/:spotId/bookings', requireAuth, validateBooking, async (req, res) =>{
+
+});
+
 module.exports = router;

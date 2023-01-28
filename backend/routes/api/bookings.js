@@ -23,21 +23,15 @@ const validateBooking = [
 
 
 // Get all of the Current User's Bookings
+// to do Fix
 router.get('/current', requireAuth, async(req, res) =>{
     let bookings = [];
 
     bookings = await Booking.findAll({
-        attributes: {
-            include: [
-                "spotId",
-                {model: User}
-            ]
-        },
         include: [
-            "userId",
-            "startDate",
-            "endDate"
+            {model: Spot}
         ]
+
     });
 
     return res.json(bookings)
@@ -45,6 +39,7 @@ router.get('/current', requireAuth, async(req, res) =>{
 });
 
 // Edit a Booking
+// to do invalid value
 router.put('/:bookingId', requireAuth, validateBooking, async(req, res) =>{
     const currentDate = new Date();
 
@@ -81,7 +76,9 @@ router.put('/:bookingId', requireAuth, validateBooking, async(req, res) =>{
     }
 
 });
+
 // Delete a Booking
+// to do
 router.delete('/:bookingId', requireAuth, validateBooking, async(req, res) =>{
 
     // grab current time

@@ -195,7 +195,7 @@ router.get('/current', requireAuth, async(req, res) =>{
 });
 
 // Get details of a Spot From An id
-// to do add spot images and owner , check for no spot id error
+// to do check for no spot id error
 router.get('/:spotId', async (req, res) => {
 
 
@@ -223,6 +223,14 @@ router.get('/:spotId', async (req, res) => {
             oneSpot.previewImage = null;
         }
 
+    // const user = await User.findByPk(req.params.userId);
+
+    const owner = await User.findOne({
+        where: {
+            // userId: req.params.ownerId
+        }
+    })
+        oneSpot.dataValues.Owner = owner;
 
     const rating = await Review.findAll({
             where: {spotId: oneSpot.id}
@@ -268,6 +276,7 @@ router.post('/', validateSpots, handleValidationErrors, async (req, res) => {
 
 // Add an Image to a Spot based on Spot's id
 // to do correct response image done
+// error check invalid spot id
 router.post('/:spotId/images', async(req, res) =>{
 
     const currentSpot = Spot.findByPk(req.params.spotId);
@@ -321,6 +330,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
 // Delete a Spot
 router.delete('/:spotId', requireAuth, async(req, res) => {
+        const user = req.user.id;
 
         const deleteSpot = await Spot.findByPk(req.params.spotId);
 

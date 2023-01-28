@@ -5,7 +5,7 @@ const spotsRouter = require('./spots.js');
 const reviewRouter = require('./reviews.js');
 const bookingRouter = require('./bookings.js');
 const spotImageRouter = require('./spotImages.js');
-const reviewImageRouter =require('./reviewImages.js');
+const reviewImageRouter = require('./reviewImages.js');
 const { restoreUser } = require('../../utils/auth');
 
 
@@ -21,9 +21,9 @@ router.use('/reviews', reviewRouter);
 
 router.use('/bookings', bookingRouter);
 
-router.use('/spotImages', spotImageRouter);
+router.use('/spot-images', spotImageRouter);
 
-router.use('/reviewImages', reviewImageRouter);
+router.use('/review-images', reviewImageRouter);
 // backend/routes/api/index.js
 
 router.post('/test', function(req, res) {

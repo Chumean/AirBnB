@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.delete('/:imageId', requireAuth, async(req, res) => {
 
-    const deleteSpotImage = await SpotImage.findByPk(req.params.newImg.id);
+    const deleteSpotImage = await SpotImage.findByPk(req.params.imageId);
 
     if(deleteSpotImage) {
         await deleteSpotImage.destroy();

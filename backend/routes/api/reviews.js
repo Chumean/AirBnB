@@ -74,7 +74,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
 
 // Edit a Review
 router.put('/:reviewId', requireAuth, async(req, res) => {
-    try{
+
         const { review, stars} = req.body;
         const updateReview = await Review.findByPk(req.params.reviewId);
         if(updateReview) {
@@ -87,9 +87,7 @@ router.put('/:reviewId', requireAuth, async(req, res) => {
         } else {
             return res.status(404).json({message: "Review couldn't be found", statusCode: 404})
         }
-    } catch (err) {
-        return res.status(404).json(handleValidationErrors)
-    }
+
 });
 
 // Delete a Review

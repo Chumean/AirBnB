@@ -10,20 +10,18 @@ const router = express.Router();
 const validateBooking = [
     check('startDate')
     .exists()
-    .isBefore('endDate')
-    .isString()
+    .isDate()
+    .isAfter()
     .withMessage('endDate cannot come before startDate'),
     check('endDate')
     .exists()
-    .isAfter('startDate')
-    .isString()
+    .isDate()
     .withMessage('endDate cannot come before startDate'),
     handleValidationErrors
 ]
 
 
-// Get all of the Current User's Bookings
-// to do Fix
+// Get all of the Current User's Bookings DONE
 router.get('/current', requireAuth, async(req, res) =>{
     let bookings = [];
 
@@ -40,50 +38,50 @@ router.get('/current', requireAuth, async(req, res) =>{
 
 // Edit a Booking
 // to do invalid value
-router.put('/:bookingId', requireAuth, validateBooking, async(req, res) =>{
-    const currentDate = new Date();
+router.put('/:bookingId', requireAuth, validateBooking, async(req, res) => {
 
-    const { startDate, endDate } = req.body;
-    const updateBooking = await Booking.findByPk(req.params.id, {
+    const {startDate, endDate } = req.body;
+
+    const updateBooking = await Booking.findByPk(req.params.bookingId);
+
+
+    const allBookings = await Booking.findAll({
         attributes: {
             include: [
                 'startDate',
                 'endDate'
             ]
         }
-    });
+    })
 
-    const bookingStartKey = updateBooking.startDate;
-    const bookStartParse = Date.parse(bookingStartKey);
 
-    const bookingEndKey = updateBooking.endDate;
-    const bookEndParse = Date.parse(bookingEndKey);
+    if(!updateBooking) return res.status(404).json({message: "Booking couldn't be found", statusCode: 404})
+    if(updateBooking) {
 
-    if(updateBooking){
-        if(startDate){
-            updateBooking.startDate = startDate
-        };
+        let startTime = updateBooking.dataValues.startDate.toString();
+        let endTime = updateBooking.dataValues.endDate.toString();
 
-        if(endDate){
-            updateBooking.endDate = endDate
-        }
-
+        updateBooking.dataValues.startDate = startDate;
+        updateBooking.dataValues.endDate = endDate;
         await updateBooking.save();
 
-        return res.json(updateBooking)
-    } else {
-        return res.status(404).json({message: "Spot couldn't be found", statusCode: 404});
-    }
 
+        return res.json(updateBooking)
+
+        } else {
+        return res.status(400).json({
+                    message: "Validation error",
+                    statusCode: 400,
+                    errors: ["endDate cannot come before startDate"]
+        })
+    }
 });
 
 // Delete a Booking
 // to do
 router.delete('/:bookingId', requireAuth, validateBooking, async(req, res) =>{
 
-    // grab current time
-    const currentDate = new Date();
-
+   
     const deleteBooking = await Booking.findByPk(req.params.bookingId, {
         attributes: {
             include: ['startDate']

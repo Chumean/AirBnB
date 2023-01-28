@@ -42,11 +42,8 @@ router.get('/current', requireAuth, async (req, res) => {
 
     });
 
-
-    res.json(reviews);
+    return res.json(reviews);
 })
-
-
 
 
 // Add an Image to Review on Review id
@@ -56,17 +53,13 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
 
     if(!currentReview) {
        return res.status(404).json({message: "Review couldn't be found", statusCode: 404})
-    }
+    };
+
     const findImage = await ReviewImage.findAll({
         where: {
             reviewId: req.params.reviewId
         }
-    })
-    console.log(findImage)
-
-    // if(findImage.length > 10) {
-    //     return res.status(403).json({message: "Maximum number of images for this resource was reached", statusCode: 403})
-    // }
+    });
 
     const {url} = req.body;
 
@@ -90,12 +83,12 @@ router.put('/:reviewId', requireAuth, async(req, res) => {
 
             await updateReview.save();
 
-            res.json({updateReview})
+            return res.json({updateReview})
         } else {
-            res.status(404).json({message: "Review couldn't be found"})
+            return res.status(404).json({message: "Review couldn't be found", statusCode: 404})
         }
     } catch (err) {
-        res.status(404).json(handleValidationErrors)
+        return res.status(404).json(handleValidationErrors)
     }
 });
 
@@ -105,9 +98,9 @@ router.delete('/:reviewId', requireAuth, async(req, res) => {
 
     if(rev) {
         await rev.destroy();
-        res.status(200).json({message: "Successfully deleted"})
+        return res.status(200).json({message: "Successfully deleted", statusCode: 200})
     } else {
-        res.status(404).json({message: "Review couldn't be found"})
+        return res.status(404).json({message: "Review couldn't be found", statusCode: 404})
     }
 })
 module.exports = router;

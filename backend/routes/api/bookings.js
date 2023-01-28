@@ -40,7 +40,7 @@ router.get('/current', requireAuth, async(req, res) =>{
         ]
     });
 
-    res.json(bookings)
+    return res.json(bookings)
 
 });
 
@@ -62,7 +62,7 @@ router.put('/:bookingId', requireAuth, validateBooking, async(req, res) =>{
     const bookStartParse = Date.parse(bookingStartKey);
 
     const bookingEndKey = updateBooking.endDate;
-    const bookEndParse = Date.parse(bookEndParse);
+    const bookEndParse = Date.parse(bookingEndKey);
 
     if(updateBooking){
         if(startDate){

@@ -5,12 +5,12 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class ReviewImage extends Model {
 
-    static async createImage({url, reviewImageId, preview}) {
+    static async createImage({url, preview}) {
       const newReviewImage = await ReviewImage.create({
-        url, reviewImageId, preview
+        url, preview
       });
 
-      return await ReviewImage.findByPk(newReviewImage.reviewImageId)
+      return await ReviewImage.findByPk(newReviewImage.id)
     }
     /**
      * Helper method for defining associations.

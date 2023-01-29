@@ -216,20 +216,20 @@ router.get('/:spotId', async (req, res) => {
 
 
     const oneSpot = await Spot.findByPk(req.params.spotId);
-
+    // console.log(oneSpot)
     const images = await SpotImage.findAll({
             where: {
-                spotId: req.params.spotId
+                spotId: req.params.SpotImages.spotId
             }
         })
 
-        oneSpot.dataValues.SpotImages = images;
+    oneSpot.SpotImages = images;
 
 
     const previewImage = await SpotImage.findOne({
             where: {
-                spotId: oneSpot.id,
-                // preview: true
+                spotId: req.params.spotId,
+
             }
         })
 
@@ -239,7 +239,7 @@ router.get('/:spotId', async (req, res) => {
             oneSpot.previewImage = null;
         }
 
-    // const user = await User.findByPk(req.params.userId);
+    const user = await User.findByPk(req.params.userId);
 
     const owner = await User.findOne({
         where: {
@@ -294,8 +294,8 @@ router.post('/', validateSpots, handleValidationErrors, async (req, res) => {
 // error check invalid spot id
 router.post('/:spotId/images', async(req, res) =>{
 
-    const currentSpot = Spot.findByPk(req.params.spotId);
-
+    const currentSpot = await Spot.findByPk(req.params.spotId);
+    // console.log(currentSpot)
     if(!currentSpot) {
         res.status(404);
         return res.json({message: "Spot couldn't be found", statusCode: 404});
@@ -303,7 +303,11 @@ router.post('/:spotId/images', async(req, res) =>{
 
         const { url, preview} = req.body;
 
-        const image = await SpotImage.createImage({preview, url})
+        const image = await SpotImage.createImage({
+            preview,
+            url,
+        })
+
         const resObj = {
             id: image.id,
             url: image.url,
@@ -421,48 +425,55 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
 
 // Get all Bookings for a Spot based on Spot id
 router.get('/:spotId/bookings', requireAuth, async(req, res) => {
-    let bookings = [];
+    // let bookings = [];
 
     const spot = await Spot.findByPk(req.params.spotId);
 
-    if(spot) {
-        if(req.params.ownerId === User.id) {
+    if(!spot)  return res.status(404).json({message: "Spot couldn't be found", statusCode: 404});
 
-            bookings = await Booking.findAll({
+    if(spot.ownerId === req.user.id) {
+        const bookings = await Booking.findAll({
+            where: {
+                spotId: req.params.spotId,
+                userId: req.user.id
+            },
+            include: {
+                model: User,
                 attributes: {
-                    include: [
-                        'spotId',
-                    'userId',
-                    'startDate',
-                    'endDate'
-                    ]
-                },
-            include: {model: User}
-            })
-
-        } else if(req.params.ownerId != User.id){
-            bookings = await Booking.findAll({
-                attributes: {
-                    include: [
-                        'spotId',
-                        'startDate',
-                        'endDate'
-                    ]
+                    exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt']
                 }
-            })
-        } else {
-        return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
-     }
-
+            },
+        })
+        return res.status(200).json({Bookings: bookings})
+    } else {
+        const bookings = await Booking.findAll({
+            where: {
+                spotId: req.params.spotId
+            },
+            attributes: {
+                exclude: ['id', 'userId', 'createdAt', 'updatedAt']
+            }
+        })
+        return res.status(200).json({Bookings: bookings})
     }
+        // if(req.params.ownerId === User.id) {
 
-    return res.json(bookings);
+        //     bookings = await Booking.findAll({
+        //         attributes: {
+        //             include: [
+        //                 'spotId',
+        //             'userId',
+        //             'startDate',
+        //             'endDate'
+        //             ]
+        //         },
+        //     include: {model: User}
+        //     })
+
 })
 
-// Create a Booking from a Spot based on Spot's id (must be in spots)
+// Create a Booking from a Spot based on Spot's id
 router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
-
-    // console.log("HEREEEEEEEEEEEEEEEEEEE")
 
     const spot = await Spot.findByPk(req.params.spotId);
 
@@ -471,8 +482,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
     const { startDate, endDate } = req.body;
 
     const start = new Date(startDate);
-    // console.log("START")
-    // console.log(start)
+
     const end = new Date(endDate);
 
     const booking = await Booking.findAll({
@@ -483,9 +493,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
             }
         }
     });
-
-    // console.log('BOOKING')
-    // console.log(booking)
 
     if(start >= end) {
         return res.status(400).json({
@@ -504,9 +511,11 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
         startDate,
         endDate,
     });
+    console.log("NEW BOOKING")
+    // console.log(newBooking)
+    // console.log(newBooking.dataValues)
+    // console.log(newBooking.dataValues.startDate)
 
-    // console.log("NEW BOOKING")
-    // console.log(newBooking.dataValues.startDate.getTime())
     const allBookings = await Booking.findAll({
         attributes: {
             include: [
@@ -514,34 +523,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
                 'endDate'
             ]
         }
-    })
-    // console.log("ALL BOOKINGS")
-    // console.log(allBookings)
-    for(let booking of allBookings) {
-        // console.log("each booking")
-        // console.log(booking.startDate.getTime())
-        let existingStartTime = booking.startDate.getTime();
-        let existingEndTime = booking.endDate.getTime();
+    });
 
-        let newStartTime = newBooking.dataValues.startDate.getTime();
-        let newEndTime = newBooking.dataValues.endDate.getTime();
-
-        if(newStartTime >= existingStartTime
-        && newStartTime <= existingEndTime
-        || newEndTime <= existingStartTime
-        && newEndTime >= existingEndTime) {
-
-            return res.status(403).json({
-                message:"Sorry, this spot is already booked for the specified dates",
-                statusCode: 403,
-                errors: [
-                    "Start date conflicts with an existing booking",
-                    'End date conflicts with an existing booking'
-                ]
-            })
-        }
-        // if(startTime)
-    }
     // const oneBooking = await Booking.findOne({
     //     attributes: {
     //         include: [
@@ -550,14 +533,68 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
     //         ]
     //     }
     // })
-    // console.log(newBooking)
-    // console.log("ONE BOOKING")
-    // console.log("START DATE")
-    // console.log(oneBooking.startDate.getTime())
 
-    // console.log("END DATE")
-    // console.log(oneBooking.endDate.getTime())
-    // console.log(oneBooking.startDate.getTime() < oneBooking.endDate.getTime())
+    // console.log("ONE BOOKING");
+    // console.log(oneBooking)
+    // console.log(oneBooking.dataValues)
+    // console.log(oneBooking.dataValues.startDate) // returns date
+    // console.log(oneBooking.dataValues.startDate < oneBooking.dataValues.endDate) // returns true
+    // console.log(newBooking.startDate.getTime()) // returns 1669248000000
+    // console.log(oneBooking.startDate.getTime()) // returns 1637280000000
+    // console.log(newBooking.startDate.getTime() > oneBooking.startDate.getTime())
+    // console.log(newBooking.startDate < oneBooking.startDate)
+    for(let booking of allBookings) {
+        // console.log(booking)
+        // let existStart = booking.startDate;
+        // let existEnd = booking.endDate;
+        // console.log(existStart < existEnd)
+        // console.log(existStart)
+        let existingStartTime = booking.startDate.getTime();
+        let existingEndTime = booking.endDate.getTime();
+        // console.log("EXISTING START TIME");
+        // console.log(existingStartTime)
+
+
+        // console.log("EXISTING END TIME");
+        // console.log(existingEndTime);
+
+        // console.log(existingStartTime < existingEndTime)
+        // let newStart = newBooking.startDate;
+        // let newEnd = newBooking.endDate;
+        // console.log(newStart);
+        // console.log(newEnd);
+        // console.log(newEnd < existEnd)
+        let newStartTime = newBooking.startDate.getTime();
+        let newEndTime = newBooking.endDate.getTime();
+
+        if(newStartTime >= existingStartTime && newEndTime <= existingEndTime ||
+           newStartTime >= existingStartTime && newEndTime >= existingEndTime ||
+           newStartTime <= existingStartTime && newEndTime >= existingStartTime ||
+           newStartTime <= existingStartTime && newEndTime >= existingEndTime) {
+           return res.status(403).json({
+            message: "Sorry, this spot is already booked for the specified dates",
+            statusCode: 403,
+            errors: [
+                "Start date conflicts with an existing booking",
+                'End date conflicts with an existing booking'
+            ]
+        })
+        }
+        //  else {
+
+        // }
+
+        // console.log(booking.startDate)
+        // console.log(booking.endDate)
+        // console.log(booking.startDate < newBooking.endDate)
+        // console.log(newStartTime < existingStartTime)
+        // console.log("NEW START TIME")
+        // console.log(newStartTime);
+    // if(newStartTime >= existingStartTime && newStartTime <= existingEndTime
+    // || newEndTime <= existingStartTime && newEndTime >= existingEndTime) {
+        // console.log(newBooking.startDate < oneBooking.startDate)
+    }
+
     return res.json(newBooking);
 
 });

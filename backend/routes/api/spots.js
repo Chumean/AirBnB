@@ -223,7 +223,7 @@ router.get('/:spotId', async (req, res) => {
                     {model: SpotImage}
             ]
         })
-  
+
     // const images = await SpotImage.findAll({
     //         where: {
     //             spotId: req.params.SpotImages.spotId
@@ -542,7 +542,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
     for(let booking of allBookings) {
 
         let existingStartTime = booking.startDate.getTime();
-
+        let existingEndTime = booking.endDate.getTime();
+        
         let newStartTime = newBooking.startDate.getTime();
         let newEndTime = newBooking.endDate.getTime();
 

@@ -215,57 +215,64 @@ router.get('/current', requireAuth, async(req, res) =>{
 router.get('/:spotId', async (req, res) => {
 
 
-    const oneSpot = await Spot.findByPk(req.params.spotId);
-    // console.log(oneSpot)
-    const images = await SpotImage.findAll({
-            where: {
-                spotId: req.params.SpotImages.spotId
-            }
+    // const oneSpot = await Spot.findByPk(req.params.spotId);
+
+    const oneSpot = await Spot.findByPk(req.params.spotId, {
+        include: [
+                    {model: User},
+                    {model: SpotImage}
+            ]
         })
+  
+    // const images = await SpotImage.findAll({
+    //         where: {
+    //             spotId: req.params.SpotImages.spotId
+    //         }
+    //     })
 
-    oneSpot.SpotImages = images;
+    // oneSpot.dataValues.SpotImages = images;
 
 
-    const previewImage = await SpotImage.findOne({
-            where: {
-                spotId: req.params.spotId,
+    // const previewImage = await SpotImage.findOne({
+    //         where: {
+    //             spotId: req.params.spotId,
 
-            }
-        })
+    //         }
+    //     })
 
-    if(previewImage) {
-            oneSpot.previewImage = previewImage.url
-        } else {
-            oneSpot.previewImage = null;
-        }
+    // if(previewImage) {
+    //         oneSpot.previewImage = previewImage.url
+    //     } else {
+    //         oneSpot.previewImage = null;
+    //     }
 
     const user = await User.findByPk(req.params.userId);
 
-    const owner = await User.findOne({
-        where: {
-            // userId: req.params.ownerId
-        }
-    })
-        oneSpot.dataValues.Owner = owner;
+    // const owner = await User.findOne({
+    //     where: {
+    //         userId: req.params.ownerId
+    //     }
+    // })
+    //     oneSpot.dataValues.Owner = owner;
 
-    const rating = await Review.findAll({
-            where: {spotId: oneSpot.id}
-        })
+    // const rating = await Review.findAll({
+    //         where: {spotId: oneSpot.id}
+    //     })
 
-    let sum = 0;
+    // let sum = 0;
 
-    if(rating.length) {
+    // if(rating.length) {
 
-            rating.forEach(ele => {
-                sum += ele.stars
-            });
+    //         rating.forEach(ele => {
+    //             sum += ele.stars
+    //         });
 
-            let avg = sum / rating.length
+    //         let avg = sum / rating.length
 
-            oneSpot.dataValues.avgRating = avg;
-    } else {
-        oneSpot.dataValues.avgRating = null;
-    }
+    //         oneSpot.dataValues.avgRating = avg;
+    // } else {
+    //     oneSpot.dataValues.avgRating = null;
+    // }
 
     if(!oneSpot){
 
@@ -295,7 +302,7 @@ router.post('/', validateSpots, handleValidationErrors, async (req, res) => {
 router.post('/:spotId/images', async(req, res) =>{
 
     const currentSpot = await Spot.findByPk(req.params.spotId);
-    // console.log(currentSpot)
+
     if(!currentSpot) {
         res.status(404);
         return res.json({message: "Spot couldn't be found", statusCode: 404});
@@ -485,14 +492,14 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
 
     const end = new Date(endDate);
 
-    const booking = await Booking.findAll({
-        include: {
-            model: Spot,
-            where: {
-                id: req.params.spotId
-            }
-        }
-    });
+    // const booking = await Booking.findAll({
+    //     include: {
+    //         model: Spot,
+    //         where: {
+    //             id: req.params.spotId
+    //         }
+    //     }
+    // });
 
     if(start >= end) {
         return res.status(400).json({
@@ -511,10 +518,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
         startDate,
         endDate,
     });
-    console.log("NEW BOOKING")
-    // console.log(newBooking)
-    // console.log(newBooking.dataValues)
-    // console.log(newBooking.dataValues.startDate)
+
 
     const allBookings = await Booking.findAll({
         attributes: {
@@ -534,36 +538,11 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
     //     }
     // })
 
-    // console.log("ONE BOOKING");
-    // console.log(oneBooking)
-    // console.log(oneBooking.dataValues)
-    // console.log(oneBooking.dataValues.startDate) // returns date
-    // console.log(oneBooking.dataValues.startDate < oneBooking.dataValues.endDate) // returns true
-    // console.log(newBooking.startDate.getTime()) // returns 1669248000000
-    // console.log(oneBooking.startDate.getTime()) // returns 1637280000000
-    // console.log(newBooking.startDate.getTime() > oneBooking.startDate.getTime())
-    // console.log(newBooking.startDate < oneBooking.startDate)
+
     for(let booking of allBookings) {
-        // console.log(booking)
-        // let existStart = booking.startDate;
-        // let existEnd = booking.endDate;
-        // console.log(existStart < existEnd)
-        // console.log(existStart)
+
         let existingStartTime = booking.startDate.getTime();
-        let existingEndTime = booking.endDate.getTime();
-        // console.log("EXISTING START TIME");
-        // console.log(existingStartTime)
 
-
-        // console.log("EXISTING END TIME");
-        // console.log(existingEndTime);
-
-        // console.log(existingStartTime < existingEndTime)
-        // let newStart = newBooking.startDate;
-        // let newEnd = newBooking.endDate;
-        // console.log(newStart);
-        // console.log(newEnd);
-        // console.log(newEnd < existEnd)
         let newStartTime = newBooking.startDate.getTime();
         let newEndTime = newBooking.endDate.getTime();
 
@@ -580,19 +559,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
             ]
         })
         }
-        //  else {
 
-        // }
-
-        // console.log(booking.startDate)
-        // console.log(booking.endDate)
-        // console.log(booking.startDate < newBooking.endDate)
-        // console.log(newStartTime < existingStartTime)
-        // console.log("NEW START TIME")
-        // console.log(newStartTime);
-    // if(newStartTime >= existingStartTime && newStartTime <= existingEndTime
-    // || newEndTime <= existingStartTime && newEndTime >= existingEndTime) {
-        // console.log(newBooking.startDate < oneBooking.startDate)
     }
 
     return res.json(newBooking);

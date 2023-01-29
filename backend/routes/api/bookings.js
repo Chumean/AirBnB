@@ -80,7 +80,7 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
             statusCode: 403
         })
     } else {
-        
+
         updateBooking.startDate = startDate;
         updateBooking.endDate = endDate;
         await updateBooking.save();
@@ -90,7 +90,6 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
 });
 
 // Delete a Booking
-// to do
 router.delete('/:bookingId', requireAuth, async(req, res) =>{
 
     const deleteBooking = await Booking.findByPk(req.params.bookingId);

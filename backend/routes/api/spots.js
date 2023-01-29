@@ -94,7 +94,7 @@ router.get('/', async (req, res) =>{
 
     spots = await Spot.findAll({
         limit: size,
-        offset: size * (page - 1),
+        offset: Math.abs(size * (page - 1)),
         attributes: [
             'id',
             'ownerId',
@@ -543,7 +543,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) =>{
 
         let existingStartTime = booking.startDate.getTime();
         let existingEndTime = booking.endDate.getTime();
-        
+
         let newStartTime = newBooking.startDate.getTime();
         let newEndTime = newBooking.endDate.getTime();
 

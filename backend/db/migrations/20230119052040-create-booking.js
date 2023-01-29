@@ -46,6 +46,6 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Bookings', options);
+    await queryInterface.dropTable(options);
   }
 };

@@ -56,16 +56,14 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
             statusCode: 400,
             errors: ['endDate cannot be on or before startDate']
         })
-
     } else if (
 
-    start.getTime() <= updateBooking.startDate.getTime() && updateBooking.endDate.getTime() <= end.getTime() ||
+    start.getTime() <= updateBooking.startDate.getTime() && updateBooking.startDate.getTime() <= end.getTime() ||
     updateBooking.startDate.getTime() <= start.getTime() && end.getTime() <= updateBooking.endDate.getTime() ||
     start.getTime() <= updateBooking.endDate.getTime() && updateBooking.endDate.getTime() <= end.getTime() ||
     start.getTime() <= updateBooking.startDate.getTime() && updateBooking.endDate.getTime() <= end.getTime()) {
 
         return res.status(403).json({
-
             message: "Sorry, this spot is already booked for the specified dates",
             statusCode: 403,
             errors: [

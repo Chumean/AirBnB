@@ -10,7 +10,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     await queryInterface.bulkInsert(options, [
       {
-        url: "www.google.com/images",
+        url: "https://assets2.rockpapershotgun.com/hot-wheels-unleashed-batman.jpg/BROK/resize/1920x1920%3E/format/jpg/quality/80/hot-wheels-unleashed-batman.jpg",
         preview: true,
         spotId: 1
       },

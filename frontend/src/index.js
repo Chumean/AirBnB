@@ -12,6 +12,8 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session.js';
 
+import Spots from './components/Spots';
+
 const store = configureStore();
 
 if (process.env.NODE_ENV !== "production") {
@@ -29,6 +31,7 @@ function Root() {
       <BrowserRouter>
         <App />
         <Modal />
+        <Spots />
       </BrowserRouter>
     </ReduxProvider>
     </ModalProvider>

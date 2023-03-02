@@ -10,17 +10,17 @@ module.exports = {
     options.tableName = 'SpotImages';
     await queryInterface.bulkInsert(options, [
       {
-        url: "https://assets2.rockpapershotgun.com/hot-wheels-unleashed-batman.jpg/BROK/resize/1920x1920%3E/format/jpg/quality/80/hot-wheels-unleashed-batman.jpg",
+        url: "https://res.cloudinary.com/dsu4khzr3/image/upload/c_scale,h_300,w_300/v1677728223/batcave_wdsrg4.jpg",
         preview: true,
         spotId: 1
       },
       {
-        url: "www.google.com/images",
+        url: "https://res.cloudinary.com/dsu4khzr3/image/upload/c_scale,h_300,w_300/v1677728232/deathstar_xmu9zz.webp",
         preview: true,
         spotId: 2
       },
       {
-        url: "www.google.com/images",
+        url: "https://res.cloudinary.com/dsu4khzr3/image/upload/c_scale,h_300,w_300/v1677728355/anastasiya-osichkina-leblancrgb-color-fin2_k6eqmj.jpg",
         preview: false,
         spotId: 3
       }

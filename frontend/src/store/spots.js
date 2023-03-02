@@ -1,16 +1,24 @@
-
+import { csrfFetch } from './csrf';
 
 // action types
 const LOAD_SPOTS = "spots/LOAD_SPOTS";
+const INFO_SPOT = "spots/INFO_SPOT";
 const ADD_SPOT = "spots/ADD_SPOT";
 const REMOVE_SPOT = "spots/REMOVE_SPOT";
-const SET_SPOT_IMAGES = 'spots/setSpotImages';
+
 
 // action creators
 const loadSpots = (spots) => ({
   type: LOAD_SPOTS,
   spots,
 });
+
+export function infoSpot(spotId) {
+    return {
+        type: INFO_SPOT,
+        spotId
+    }
+}
 
 const addSpot = (spot) => ({
   type: ADD_SPOT,
@@ -22,41 +30,33 @@ const removeSpot = (spotId) => ({
   spotId,
 });
 
-export const setSpotImages = (spotImages) => ({
-    type: SET_SPOT_IMAGES,
-    payload: spotImages
-  });
+
 
 // thunk creators
-// export const getAllSpots = () => async (dispatch) => {
-//   try {
-//     // make a request to the backend API to get all spots
-//     const res = await fetch("/api/spots");
-//     if (!res.ok) {
-//       throw res;
-//     }
-//     const data = await res.json();
 
-//     dispatch(loadSpots(data.spots));
-//   } catch (err) {
-//     console.error(err);
-
-//   }
-// };
 export const getAllSpots = () => async dispatch => {
-    const response = await fetch('/api/spots');
+    const response = await csrfFetch('/api/spots');
     if (response.ok) {
       const spotsData = await response.json();
       dispatch(loadSpots(spotsData.spots));
-      dispatch(setSpotImages(spotsData.spotImages));
+
     }
-  };
+};
+
+export const getSpotInfo = (spotId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}`);
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(infoSpot(data));
+        return res;
+    }
+}
 
 
 export const createSpot = (spotData) => async (dispatch) => {
   try {
 
-    const res = await fetch("/api/spots", {
+    const res = await csrfFetch("/api/spots", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export const createSpot = (spotData) => async (dispatch) => {
 export const deleteSpot = (spotId) => async (dispatch) => {
   try {
 
-    const res = await fetch(`/api/spots/${spotId}`, {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
       method: "DELETE",
     });
     if (!res.ok) {
@@ -101,20 +101,25 @@ const initialState = {
 // reducer
 const spotsReducer = (state = initialState, action) => {
   let newState;
+
   switch (action.type) {
+
     case LOAD_SPOTS:
       newState = {
         ...state,
         isLoading: false,
         spots: action.spots,
       };
+      console.log("NEWSTATE")
+      console.log(newState)
       return newState;
 
-    case SET_SPOT_IMAGES:
+    case INFO_SPOT:
         return {
             ...state,
-            spotImages: action.payload
+            details: action.spotId
         }
+
     case ADD_SPOT:
       newState = {
         ...state,
@@ -124,6 +129,7 @@ const spotsReducer = (state = initialState, action) => {
         },
       };
       return newState;
+
     case REMOVE_SPOT:
       newState = {
         ...state,
@@ -133,6 +139,7 @@ const spotsReducer = (state = initialState, action) => {
       };
       delete newState.spots[action.spotId];
       return newState;
+      
     default:
       return state;
   }

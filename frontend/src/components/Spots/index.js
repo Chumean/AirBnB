@@ -1,11 +1,12 @@
+import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots } from '../../store/spots';
 
+
 function Spots() {
   const dispatch = useDispatch();
   const spots = useSelector(state => state.spots.spots);
-  const spotTest = useSelector(state => state.spots.previewImage)
 
 
   useEffect(() => {
@@ -22,11 +23,11 @@ function Spots() {
             <h2>{spot.name}</h2>
             <p>{spot.description}</p>
             <p>Price: ${spot.price} per night</p>
-            <p>TEST</p>
             <img key={spot.id} src={spot.previewImage} />
           </li>
         ))}
       </ul>
+      <Link to="/spots/new">List a Spot</Link>
     </div>
   );
 }

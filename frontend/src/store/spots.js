@@ -8,32 +8,30 @@ const REMOVE_SPOT = "spots/REMOVE_SPOT";
 
 
 // action creators
-const loadSpots = (spots) => ({
+export const loadSpots = (spots) => ({
   type: LOAD_SPOTS,
   spots,
 });
 
-export function infoSpot(spotId) {
+export const infoSpot = (spotId) => {
     return {
         type: INFO_SPOT,
         spotId
     }
 }
 
-const addSpot = (spot) => ({
+export const addSpot = (spot) => ({
   type: ADD_SPOT,
   spot,
 });
 
-const removeSpot = (spotId) => ({
+export const removeSpot = (spotId) => ({
   type: REMOVE_SPOT,
   spotId,
 });
 
 
-
 // thunk creators
-
 export const getAllSpots = () => async dispatch => {
     const response = await csrfFetch('/api/spots');
     if (response.ok) {
@@ -94,7 +92,6 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 
 // initial state
 const initialState = {
-  isLoading: false,
   spots: {},
 };
 
@@ -107,12 +104,9 @@ const spotsReducer = (state = initialState, action) => {
     case LOAD_SPOTS:
       newState = {
         ...state,
-        isLoading: false,
         spots: action.spots,
       };
-      console.log("NEWSTATE")
-      console.log(newState)
-      return newState;
+        return newState;
 
     case INFO_SPOT:
         return {
@@ -139,7 +133,7 @@ const spotsReducer = (state = initialState, action) => {
       };
       delete newState.spots[action.spotId];
       return newState;
-      
+
     default:
       return state;
   }

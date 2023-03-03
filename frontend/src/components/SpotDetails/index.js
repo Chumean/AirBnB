@@ -1,41 +1,41 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import { getSpotInfo } from "../../store/spots";
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getSpotInfo } from '../../store/spots';
+import { useEffect } from 'react';
 
-
-const SpotDetails = () => {
-    const {spotId} = useParams();
+function SpotDetails() {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const spots = useSelector(state => state.spots.spots);
-    const selectedSpot = useSelector(state => state.spot[spotId]);
+    const { spotId } = useParams();
+    const spots = useSelector(state => state.spots);
+    const spotDetails = spots.details;
+    console.log(spotDetails)
 
     useEffect(() => {
         dispatch(getSpotInfo(spotId))
     }, [dispatch, spotId])
 
-    return (
-        <div>
-            <h1>Spot is owned by</h1>
-            <ul>
-                {Object.values(spots).map(spot => (
-                <li key={spot.id}>
-                <h2>{spot.name}</h2>
-                <p>{spot.description}</p>
-                <p>address</p>
-                <p>city</p>
-                <p>state</p>
-                <p>country</p>
-                <p>lat</p>
-                <p>lng</p>
-                <p>Price: ${spot.price} per night</p>
-                <img key={spot.id} src={spot.previewImage} />
-            </li>
-            ))}
-            </ul>
-        </div>
-    )
+
+  return (
+    <div>
+        <h2>test</h2>
+        <ul>
+        {Object.values(spots).map(spot => (
+          <li key={spot.id}>
+            <h2>{spot.name}</h2>
+            <p>{spot.address}</p>
+            <p>{spot.city}</p>
+            <p>{spot.state}</p>
+            <p>{spot.country}</p>
+            <p>{spot.lat}</p>
+            <p>{spot.lng}</p>
+            <p>{spot.description}</p>
+            <p>${spot.price}</p>
+            <img key={spot.id} src={spot.previewImage} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default SpotDetails;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { createSpot } from '../../store/spots';
+import { createSpot } from '../store/spots';
 
 const CreateSpot = (spot, formType) => {
     const history = useHistory();

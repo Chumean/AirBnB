@@ -34,6 +34,7 @@ export const getAllSpots = () => async dispatch => {
     const response = await csrfFetch('/api/spots');
     if (response.ok) {
       const spotsData = await response.json();
+      console.log(spotsData)
       dispatch(loadSpots(spotsData.spots));
 
     }
@@ -88,76 +89,33 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 };
 
 // INITIAL STATE
-const initialState = {
-  spots: []
-};
+const initialState = {};
 
 // REDUCER
 const spotsReducer = (state = initialState, action) => {
-  let newState;
+
 
   switch (action.type) {
 
     case LOAD_SPOTS:
-      newState = {
-        ...state,
-        spots: action.spots,
-      };
-      return newState;
+      // console.log("ACTION SPOTS")
+      // console.log(action.spots)
+       const loadState = {};
+       action.spots.forEach(spot => [loadState.spot.id] = spot)
+      return {...state, ...loadState}
 
     case ADD_SPOT:
-      newState = {
-        ...state,
-        spots: [...state.spots, action.spot],
-      };
-      return newState;
+      return {...state, spots: [...state.spots, action.spot]};
 
     case REMOVE_SPOT:
-      newState = {
-        ...state,
-        spots: state.spots.filter(spot => spot.id !== action.spotId),
-      };
+      const newState = {...state};
+      delete newState[action.spotId]
       return newState;
 
     default:
       return state;
   }
 };
-// const spotsReducer = (state = initialState, action) => {
-//   let newState;
 
-//   switch (action.type) {
-
-//     case LOAD_SPOTS:
-//       newState = {
-//         ...state,
-//         spots: action.spots,
-//       };
-//         return newState;
-
-//     case ADD_SPOT:
-//       newState = {
-//         ...state,
-//         spots: {
-//           ...state.spots,
-//           [action.spot.id]: action.spot,
-//         },
-//       };
-//       return newState;
-
-//     case REMOVE_SPOT:
-//       newState = {
-//         ...state,
-//         spots: {
-//           ...state.spots,
-//         },
-//       };
-//       delete newState.spots[action.spotId];
-//       return newState;
-
-//     default:
-//       return state;
-//   }
-// };
 
 export default spotsReducer;

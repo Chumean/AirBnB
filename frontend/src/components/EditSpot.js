@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import CreateSpot from "../CreateSpot/CreateSpot";
+import CreateSpot from "./CreateSpot";
 
 const EditSpot = () => {
     const { spotId } = useParams();

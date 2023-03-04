@@ -30,7 +30,7 @@ function SpotsIndex() {
 
       </ul>
 
-      {/* <Link to="/spots/new">List a Spot</Link> */}
+      
     </div>
   );
 }

@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllSpots } from '../../store/spots';
+import { getAllSpots } from '../store/spots';
 
 
-function Spots() {
+function SpotsIndex() {
   const dispatch = useDispatch();
   const spots = useSelector(state => state.spots.spots);
 
-
+    console.log(spots);
   useEffect(() => {
     dispatch(getAllSpots());
   }, [dispatch]);
@@ -21,7 +21,7 @@ function Spots() {
         {Object.values(spots).map(spot => (
           <li key={spot.id}>
             <h2>{spot.name}</h2>
-            <p>{spot.description}</p>
+            <p>{spot.city}, {spot.state}</p>
             <p>Price: ${spot.price} per night</p>
             <img key={spot.id} src={spot.previewImage} />
           </li>
@@ -32,4 +32,4 @@ function Spots() {
   );
 }
 
-export default Spots;
+export default SpotsIndex;

@@ -54,7 +54,7 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
 
 // create spot thunk
 export const createSpot = (spot) => async (dispatch) => {
-
+    console.log("HIT")
     const res = await csrfFetch("/api/spots", {
       method: "POST",
       headers: {
@@ -98,8 +98,6 @@ const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case LOAD_SPOTS:
-      // console.log("ACTION SPOTS")
-      // console.log(action.spots)
        const loadState = {};
        action.spots.forEach(spot => loadState[spot.id] = spot)
       return {...state, ...loadState}

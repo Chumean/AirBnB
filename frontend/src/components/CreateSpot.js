@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createSpot } from '../store/spots';
 
-const CreateSpot = (spot, formType) => {
+const CreateSpot = (spot) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -17,10 +17,10 @@ const CreateSpot = (spot, formType) => {
     const [description, setDescription] = useState(spot.description || '');
     const [price, setPrice] = useState(spot.price || 0);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const newSpot = {
+        const newSpotInput = {
             ...spot,
             name: name,
             address: address,
@@ -33,14 +33,20 @@ const CreateSpot = (spot, formType) => {
             price: price,
         };
 
-        dispatch(createSpot(newSpot));
-        history.push(`/spots/${newSpot.id}`);
+        let newSpot;
+        newSpot = await dispatch(createSpot(newSpotInput));
+
+        console.log('newspot', newSpot)
+        if(newSpot) {
+            history.push(`/api/spots/${newSpot.id}`);
+        }
+        console.log("AFTER", newSpot)
     };
 
 
     return (
         <form onSubmit={handleSubmit}>
-            {/* <h2>{formType}</h2> */}
+
             <label>
                 Name
                 <input
@@ -121,7 +127,7 @@ const CreateSpot = (spot, formType) => {
                 onChange={e => setPrice(e.target.value)}
                  />
             </label>
-            <input type="submit" value={formType} />
+            <input type="submit" value='Submit' />
 
         </form>
     )

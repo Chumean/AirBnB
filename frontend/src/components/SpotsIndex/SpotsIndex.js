@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllSpots } from '../store/spots';
-import SpotsIndexItem from './SpotsIndexItem';
+import { getAllSpots } from '../../store/spots';
+import SpotsIndexItem from '../SpotsIndexItem';
 
 function SpotsIndex() {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function SpotsIndex() {
 
       </ul>
 
-      
+
     </div>
   );
 }

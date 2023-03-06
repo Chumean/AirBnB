@@ -4,9 +4,9 @@ import { Switch, Route } from 'react-router-dom';
 import * as sessionActions from './store/session';
 
 import Navigation from './components/Navigation';
-import SpotsIndex from './components/SpotsIndex';
-import SpotDetails from './components/SpotDetails';
-import CreateSpot from './components/CreateSpot';
+import SpotsIndex from './components/SpotsIndex/SpotsIndex';
+import SpotDetails from './components/SpotDetails/SpotDetails';
+import CreateSpot from './components/CreateSpot/CreateSpot';
 
 function App() {
   const dispatch = useDispatch();

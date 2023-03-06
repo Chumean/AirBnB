@@ -54,7 +54,7 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
 
 // create spot thunk
 export const createSpot = (spot) => async (dispatch) => {
-    console.log("HIT")
+   
     const res = await csrfFetch("/api/spots", {
       method: "POST",
       headers: {

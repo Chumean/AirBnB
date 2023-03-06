@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { createSpot } from '../store/spots';
+import { createSpot } from '../../store/spots';
 
 const CreateSpot = (spot) => {
     const history = useHistory();
@@ -36,11 +36,23 @@ const CreateSpot = (spot) => {
         let newSpot;
         newSpot = await dispatch(createSpot(newSpotInput));
 
-        console.log('newspot', newSpot)
+        console.log('before useHISTORY()')
+        console.log(newSpot)
         if(newSpot) {
-            history.push(`/api/spots/${newSpot.id}`);
+            history.push(`/spots/${newSpot.id}`);
+
+            setName('');
+            setAddress('');
+            setCity('');
+            setState('');
+            setCountry('');
+            setLat(0);
+            setLng(0);
+            setDescription('');
+            setPrice(0)
         }
-        console.log("AFTER", newSpot)
+        console.log("AFTER useHISTORY()")
+        console.log(newSpot)
     };
 
 

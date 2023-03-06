@@ -18,6 +18,8 @@ const SpotsIndexItem = ({spot}) => {
           <p>{spot.city}, {spot.state}</p>
           <p>Price: ${spot.price} per night</p>
           <img src={spot.previewImage} alt={`Preview of ${spot.name}`} />
+          <div></div>
+          <Link to={`/spots/${spot.id}`}>View Spot</Link>
         </li>
       );
 }

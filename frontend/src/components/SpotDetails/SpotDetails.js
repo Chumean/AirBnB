@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
 
@@ -17,9 +17,9 @@ const SpotDetails = () => {
         dispatch(getSpotDetails(spotId))
     },[dispatch, spotId])
 
-    // const handleEdit = () => {
-    //     history.push(`/spots/${spotId}/edit`);
-    // }
+    const handleEdit = () => {
+        history.push(`/spots/${spotId}/edit`);
+    }
 
     const handleDeleteSpot = async(e) => {
         e.preventDefault();

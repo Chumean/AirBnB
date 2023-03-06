@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import CreateSpot from "../CreateSpot/CreateSpot";
-import { createSpot } from "../../store/spots";
+import { updateSpot } from "../../store/spots";
 
 
 const EditSpot = () => {
@@ -11,7 +11,7 @@ const EditSpot = () => {
     const spot = useSelector(state => state.spots[spotId]);
 
 
-   
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -28,7 +28,7 @@ const EditSpot = () => {
             price: e.target.price.value,
         };
 
-        await dispatch(createSpot(updatedSpot, 'PUT'));
+        await dispatch(updateSpot(updatedSpot))
         history.push(`/spots/${spotId}`);
     }
 

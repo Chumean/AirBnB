@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createSpot } from '../../store/spots';
 
-const CreateSpot = (spot) => {
+const CreateSpot = ({spot = {}}) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -36,8 +36,7 @@ const CreateSpot = (spot) => {
         let newSpot;
         newSpot = await dispatch(createSpot(newSpotInput));
 
-        console.log('before useHISTORY()')
-        console.log(newSpot)
+
         if(newSpot) {
             history.push(`/spots/${newSpot.id}`);
 

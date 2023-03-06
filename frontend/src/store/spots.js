@@ -54,7 +54,7 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
 
 // create spot thunk
 export const createSpot = (spot) => async (dispatch) => {
-   
+
     const res = await csrfFetch("/api/spots", {
       method: "POST",
       headers: {
@@ -66,6 +66,7 @@ export const createSpot = (spot) => async (dispatch) => {
     if (res.ok) {
       const data = await res.json();
       dispatch(addSpot(data));
+      return data;
     }
 
 };

@@ -11,8 +11,7 @@ const EditSpot = () => {
     const spot = useSelector(state => state.spots[spotId]);
 
 
-    console.log("HISTORY")
-    console.log(history)
+   
     const handleSubmit = async (e) => {
         e.preventDefault();
 

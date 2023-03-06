@@ -1,13 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import CreateSpot from "../CreateSpot/CreateSpot";
 import { createSpot } from "../../store/spots";
 
+
 const EditSpot = () => {
+    const history = useHistory();
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spots[spotId]);
 
+
+    console.log("HISTORY")
+    console.log(history)
     const handleSubmit = async (e) => {
         e.preventDefault();
 

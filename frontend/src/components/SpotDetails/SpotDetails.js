@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+import React from "react";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
 
 
@@ -17,10 +17,7 @@ const SpotDetails = () => {
         dispatch(getSpotDetails(spotId))
     },[dispatch, spotId])
 
-    const handleEdit = () => {
-        history.push(`/spots/${spotId}/edit`);
-    }
-
+   
     const handleDeleteSpot = async(e) => {
         e.preventDefault();
         await dispatch(deleteSpot(spotId));
@@ -36,11 +33,14 @@ const SpotDetails = () => {
                     <p>{spots.city}, {spots.state}, {spots.country}</p>
                     <img src={spots.previewImage}/>
 
-                    <h2>Hosted By {spots.User.firstName} {spots.User.lastName}</h2>
+                    <h2>Hosted By {spots.User?.firstName} {spots.User?.lastName}</h2>
                     <p>{spots.description}</p>
                     <div>${spots.price} night</div>
                     <h2>Reviews</h2>
                     <button onClick={handleDeleteSpot}>Remove Listing</button>
+                    <Link to={`/spots/${spotId}/edit`} >
+                        <button>Update Spot</button>
+                    </Link>
                 </div>
             )}
         </div>

@@ -23,6 +23,7 @@ function SpotsIndex() {
             <SpotsIndexItem
             key={spot.id}
             spot={spot}
+            spotsOBj={spotsOBj}
             />
         ))}
       </ul>

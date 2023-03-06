@@ -56,7 +56,7 @@ const EditSpot = () => {
   return (
     <div>
       <h2>Edit Spot</h2>
-      <EditSpotForm spot={spot} onSubmit={handleSubmit} />
+      {spot && <EditSpotForm spot={spot} onSubmit={handleSubmit} />}
     </div>
   );
 };

@@ -1,0 +1,54 @@
+import React from "react";
+import { useParams, useHistory, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getSpotDetails, deleteSpot } from "../../store/spots";
+
+
+const SpotDetails = () => {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const {spotId} = useParams();
+    const spots = useSelector(state => state.spots[spotId]);
+
+
+
+    useEffect(() => {
+        dispatch(getSpotDetails(spotId))
+    },[dispatch, spotId])
+
+   
+    const handleDeleteSpot = async(e) => {
+        e.preventDefault();
+        await dispatch(deleteSpot(spotId));
+        history.push("/");
+    }
+
+
+    return (
+        <div>
+            <h2>DETAILS</h2>
+            {spots && (
+                <div>
+                    <p>{spots.city}, {spots.state}, {spots.country}</p>
+                    <img src={spots.previewImage}/>
+
+                    <h2>Hosted By {spots.User?.firstName} {spots.User?.lastName}</h2>
+                    <p>{spots.description}</p>
+                    <div>${spots.price} night</div>
+                    <h2>Reviews</h2>
+                    <button onClick={handleDeleteSpot}>Remove Listing</button>
+                    <Link to={`/spots/${spotId}/edit`} >
+                        <button>Update Spot</button>
+                    </Link>
+                </div>
+            )}
+        </div>
+    )
+
+
+
+
+}
+
+export default SpotDetails;

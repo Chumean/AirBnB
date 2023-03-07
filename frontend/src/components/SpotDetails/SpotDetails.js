@@ -3,7 +3,9 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
-
+import { useModal, ModalProvider } from "../../context/Modal";
+import ReviewModal from "../ReviewModal/ReviewModal";
+import { createReview, getAllReviews } from "../../store/reviews";
 
 const SpotDetails = () => {
     const dispatch = useDispatch();
@@ -11,21 +13,38 @@ const SpotDetails = () => {
     const {spotId} = useParams();
     const spots = useSelector(state => state.spots[spotId]);
 
+    console.log("REVIEWSSSSSSSSSSSSSSSSS")
+    const reviews = useSelector(state => state.reviews);
+    console.log(reviews)
 
+
+
+    const {setModalContent} = useModal();
 
     useEffect(() => {
         dispatch(getSpotDetails(spotId))
+        dispatch(getAllReviews(spotId))
     },[dispatch, spotId])
 
-   
+
     const handleDeleteSpot = async(e) => {
         e.preventDefault();
         await dispatch(deleteSpot(spotId));
         history.push("/");
     }
 
+    const handlePostReview = () => {
+        setModalContent(<ReviewModal onSubmit={async (review) => {
+          const data = await dispatch(createReview(review));
+          if (data) {
+            dispatch(getAllReviews(spotId));
+          }
+        }} />);
+      }
+
 
     return (
+    <ModalProvider>
         <div>
             <h2>DETAILS</h2>
             {spots && (
@@ -36,18 +55,28 @@ const SpotDetails = () => {
                     <h2>Hosted By {spots.User?.firstName} {spots.User?.lastName}</h2>
                     <p>{spots.description}</p>
                     <div>${spots.price} night</div>
-                    <h2>Reviews</h2>
+                    <div>
+                        <h2>Reviews</h2>
+                            {Object.values(reviews).map(review => (
+                            <div key={review.id}>
+                            <p>{review.review}</p>
+                            <p>{review.stars} stars</p>
+
+                    </div>
+                    ))}
+                    </div>
+
+
                     <button onClick={handleDeleteSpot}>Remove Listing</button>
                     <Link to={`/spots/${spotId}/edit`} >
                         <button>Update Spot</button>
                     </Link>
+                    <button onClick={handlePostReview}>Post Review</button>
                 </div>
             )}
         </div>
+    </ModalProvider>
     )
-
-
-
 
 }
 

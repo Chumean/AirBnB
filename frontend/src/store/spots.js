@@ -133,7 +133,7 @@ const spotsReducer = (state = initialState, action) => {
       return newState;
 
     case EDIT_SPOT:
-      const updatedSpot = action.spot;
+      const updatedSpot = action.spot.updateSpot;
       return { ...state, [updatedSpot.id]: updatedSpot };
 
     default:

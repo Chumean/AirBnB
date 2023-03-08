@@ -15,19 +15,19 @@ module.exports = {
       {
         userId: 1,
         spotId: 1,
-        review: "This was an awesome spot!",
+        review: "Pretty dank and quiet. Comes with butler though!",
         stars: 5,
       },
       { userId: 2,
         spotId: 2,
-        review: "meh",
-        stars: 3,
+        review: "Feels like you're in a prison. This wookie won't leave me alone though",
+        stars: 2,
       },
       {
         userId: 3,
         spotId: 3,
-        review: "bad",
-        stars: 1,
+        review: "Great coffee and curry combo. Cat keeps telling me to go to sleep though",
+        stars: 4,
       }
     ], {})
 

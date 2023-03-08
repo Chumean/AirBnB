@@ -4,41 +4,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
 import { useModal, ModalProvider } from "../../context/Modal";
-import ReviewModal from "../ReviewModal/ReviewModal";
-import { createReview, getAllReviews } from "../../store/reviews";
+import { getAllReviews, removeReview } from "../../store/reviews";
+import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
+import OpenModalButton from "../OpenModalButton";
 
 const SpotDetails = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const {spotId} = useParams();
     const spots = useSelector(state => state.spots[spotId]);
+    let reviews = useSelector(state => state.reviews);
 
-
-    const reviews = useSelector(state => state.reviews);
-    
-
-    // function objKeys(obj) {
-    //     for (const prop in obj["1"]) {
-    //       console.log(prop);
-    //     }
-    //   }
-
-    //   objKeys(reviews);
-
-    //   function logReviewInfo(review) {
-    //     console.log(" REVIEW SPOT ID", review.spotId)
-    //   }
-
-    //   const review = reviews["1"];
-    //   logReviewInfo(review);
-
-
-    console.log(reviews)
+    reviews = useSelector((state) =>
+    Object.values(state.reviews).filter((review) => review.spotId === spots.id)
+    );
 
     const {setModalContent} = useModal();
 
     useEffect(() => {
-        console.log("SPOT ID", spotId)
         dispatch(getSpotDetails(spotId))
         dispatch(getAllReviews(spotId))
     },[dispatch, spotId])
@@ -50,14 +33,13 @@ const SpotDetails = () => {
         history.push("/");
     }
 
-    const handlePostReview = () => {
-        setModalContent(<ReviewModal onSubmit={async (review) => {
-          const data = await dispatch(createReview(review));
-          if (data) {
-            dispatch(getAllReviews(spotId));
-          }
-        }} />);
-      }
+
+
+    const handleRemoveReview = async(reviewId) => {
+        await dispatch(removeReview(reviewId));
+        dispatch(getAllReviews(spotId))
+    }
+
 
 
     return (
@@ -78,6 +60,12 @@ const SpotDetails = () => {
                             <div key={review.id}>
                             <p>{review.review}</p>
                             <p>{review.stars} stars</p>
+                            <button>
+                                <OpenModalButton
+                                
+                                 />
+                                Delete Review
+                            </button>
 
                     </div>
                     ))}
@@ -88,7 +76,7 @@ const SpotDetails = () => {
                     <Link to={`/spots/${spotId}/edit`} >
                         <button>Update Spot</button>
                     </Link>
-                    <button onClick={handlePostReview}>Post Review</button>
+                    <button>Post Review</button>
                 </div>
             )}
         </div>

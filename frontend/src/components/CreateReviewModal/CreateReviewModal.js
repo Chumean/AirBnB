@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useModal } from '../../context/Modal';
 
-function ReviewModal({ onSubmit }) {
+function CreateReviewModal({ onSubmit }) {
   const { setModalContent, closeModal } = useModal();
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState('');
@@ -33,7 +33,7 @@ function MyComponent() {
   const { setModalContent } = useModal();
 
   const handlePostReviewClick = () => {
-    setModalContent(<ReviewModal onSubmit={(review) => console.log(review)} />);
+    setModalContent(<CreateReviewModal onSubmit={(review) => console.log(review)} />);
   };
 
   return (
@@ -43,4 +43,4 @@ function MyComponent() {
   );
 }
 
-export default ReviewModal;
+export default CreateReviewModal;

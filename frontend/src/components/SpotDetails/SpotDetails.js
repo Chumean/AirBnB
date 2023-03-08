@@ -13,15 +13,32 @@ const SpotDetails = () => {
     const {spotId} = useParams();
     const spots = useSelector(state => state.spots[spotId]);
 
-    console.log("REVIEWSSSSSSSSSSSSSSSSS")
+
     const reviews = useSelector(state => state.reviews);
+    
+
+    // function objKeys(obj) {
+    //     for (const prop in obj["1"]) {
+    //       console.log(prop);
+    //     }
+    //   }
+
+    //   objKeys(reviews);
+
+    //   function logReviewInfo(review) {
+    //     console.log(" REVIEW SPOT ID", review.spotId)
+    //   }
+
+    //   const review = reviews["1"];
+    //   logReviewInfo(review);
+
+
     console.log(reviews)
-
-
 
     const {setModalContent} = useModal();
 
     useEffect(() => {
+        console.log("SPOT ID", spotId)
         dispatch(getSpotDetails(spotId))
         dispatch(getAllReviews(spotId))
     },[dispatch, spotId])

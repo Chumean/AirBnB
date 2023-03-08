@@ -4,14 +4,14 @@ import { csrfFetch } from './csrf';
 const LOAD_REVIEWS = "reviews/LOAD_REVIEWS";
 const ADD_REVIEW = "reviews/ADD_REVIEW";
 const REMOVE_REVIEW = "reviews/REMOVE_REVIEW";
-const EDIT_REVIEW = "reviews/EDIT_REVIEW";
+// const EDIT_REVIEW = "reviews/EDIT_REVIEW";
 
 // ACTION CREATORS
 
 // Load Reviews Action
 export const loadReviews = (reviews) => ({
   type: LOAD_REVIEWS,
-  reviews,
+  reviews
 });
 
 // Add Review Action
@@ -27,10 +27,10 @@ export const removeReview = (reviewId) => ({
 });
 
 // Edit Review Action
-export const editReview = (review) => ({
-  type: EDIT_REVIEW,
-  review,
-});
+// export const editReview = (review) => ({
+//   type: EDIT_REVIEW,
+//   review,
+// });
 
 // THUNK CREATORS
 
@@ -39,9 +39,9 @@ export const getAllReviews = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
 
   if (response.ok) {
-    const reviewsData = await response.json();
-
-    dispatch(loadReviews(reviewsData));
+    const reviews = await response.json();
+    
+    dispatch(loadReviews(reviews));
   }
 };
 
@@ -62,21 +62,21 @@ export const createReview = (review) => async (dispatch) => {
 };
 
 
-// edit review thunk
-export const updateReview = (review) => async (dispatch) => {
-  const res = await csrfFetch(`/api/reviews/${review.id}`, {
-    method: "PUT",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(review)
-  });
-  if (res.ok) {
-    const updatedReview = await res.json();
-    dispatch(editReview(updatedReview));
-    return updatedReview;
-  }
-};
+// // edit review thunk
+// export const updateReview = (review) => async (dispatch) => {
+//   const res = await csrfFetch(`/api/reviews/${review.id}`, {
+//     method: "PUT",
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(review)
+//   });
+//   if (res.ok) {
+//     const updatedReview = await res.json();
+//     dispatch(editReview(updatedReview));
+//     return updatedReview;
+//   }
+// };
 
 // delete review thunk
 export const deleteReview = (reviewId) => async (dispatch) => {
@@ -97,9 +97,10 @@ const initialState = {};
 // REDUCER
 const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case LOAD_REVIEWS:
       const loadState = {};
-      action.reviews.forEach(review => loadState[review.id] = review)
+      action.reviews.forEach(review => loadState[review.spotId] = review);
       return {...state, ...loadState}
 
     case ADD_REVIEW:
@@ -110,9 +111,9 @@ const reviewsReducer = (state = initialState, action) => {
       delete newState[action.reviewId]
       return newState;
 
-    case EDIT_REVIEW:
-      const updatedReview = action.review;
-      return { ...state, [updatedReview.id]: updatedReview };
+    // case EDIT_REVIEW:
+    //   const updatedReview = action.review;
+    //   return { ...state, [updatedReview.id]: updatedReview };
 
     default:
       return state;

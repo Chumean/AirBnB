@@ -1,12 +1,10 @@
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { getSpotDetails } from "../../store/spots";
 import { deleteReview } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 
 const DeleteReviewModal = ({reviewId, spotId}) => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const {closeModal} = useModal();
 
     const removeReview = async (e) => {

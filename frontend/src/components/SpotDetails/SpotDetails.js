@@ -53,8 +53,10 @@ const SpotDetails = () => {
 
     // Delete a review
     const handleDeleteReview =  async (reviewId, spotId) => {
+        console.log("REVIEW ID" , reviewId);
+        console.log("SPOT ID", spotId)
         setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
-        dispatch(removeReview(reviewId))
+        // dispatch(removeReview(reviewId))
         openModal();
     }
 
@@ -83,11 +85,15 @@ const SpotDetails = () => {
                     <p>{spots.description}</p>
                     <div>${spots.price} night</div>
                     <div>
+                        <button>Reserve</button>
+                    </div>
+                    <div>
                         <h2>Reviews</h2>
                             {Object.values(reviews).map(review => (
                             <div key={review.id}>
                             <p>{review.review}</p>
                             <p>{review.stars} stars</p>
+
                             <button onClick={() => handleDeleteReview(review.id, spots.id)}>
                             Delete Review
                             </button>

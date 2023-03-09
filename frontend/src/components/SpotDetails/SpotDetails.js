@@ -32,7 +32,6 @@ const SpotDetails = () => {
 
     // Delete Review modals
     const [showModal, setShowModal] = useState(false);
-    const [deletedReviewIds, setDeleteReviewIds] = useState([]);
 
     const openModal = () => {
         setShowModal(true);
@@ -54,9 +53,8 @@ const SpotDetails = () => {
 
     // Delete a review
     const handleDeleteReview =  async (reviewId, spotId) => {
-        await dispatch(removeReview(reviewId));
-        setDeleteReviewIds([...deletedReviewIds, reviewId]);
         setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
+        dispatch(removeReview(reviewId))
         openModal();
     }
 

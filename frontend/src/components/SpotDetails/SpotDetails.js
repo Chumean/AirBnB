@@ -1,12 +1,12 @@
 import React from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState} from "react";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
 import { useModal, ModalProvider } from "../../context/Modal";
-import { getAllReviews, removeReview } from "../../store/reviews";
+import { getAllReviews, removeReview} from "../../store/reviews";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
-import OpenModalButton from "../OpenModalButton";
+import AddReviewModal from "../AddReviewModal/AddReviewModal";
 
 
 
@@ -30,7 +30,9 @@ const SpotDetails = () => {
         dispatch(getAllReviews(spotId))
     },[dispatch, spotId])
 
+    // Delete Review modals
     const [showModal, setShowModal] = useState(false);
+    const [deletedReviewIds, setDeleteReviewIds] = useState([]);
 
     const openModal = () => {
         setShowModal(true);
@@ -40,7 +42,20 @@ const SpotDetails = () => {
         setShowModal(false);
     }
 
-    const handleDeleteReview = (reviewId, spotId) => {
+    const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+
+    const openAddReviewModal = () => {
+        setShowAddReviewModal(true);
+    }
+
+    const closeAddReviewModal = () => {
+        setShowAddReviewModal(false);
+    }
+
+    // Delete a review
+    const handleDeleteReview =  async (reviewId, spotId) => {
+        await dispatch(removeReview(reviewId));
+        setDeleteReviewIds([...deletedReviewIds, reviewId]);
         setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
         openModal();
     }
@@ -50,6 +65,10 @@ const SpotDetails = () => {
         e.preventDefault();
         await dispatch(deleteSpot(spotId));
         await history.push("/");
+    };
+
+    const handleAddReviewModal = () => {
+        setShowAddReviewModal(true);
     }
 
 
@@ -77,8 +96,15 @@ const SpotDetails = () => {
 
                     </div>
                     ))}
+                    <button onClick={handleAddReviewModal}>Add a Review</button>
                     </div>
-
+                    {showAddReviewModal && (
+                        <AddReviewModal
+                            openAddReviewModal={openAddReviewModal}
+                            handleAddReviewModal={handleAddReviewModal}
+                            closeAddReviewModal={closeAddReviewModal}
+                         />
+                    )}
 
                     <button onClick={handleDeleteSpot}>Remove Listing</button>
                     <Link to={`/spots/${spotId}/edit`} >

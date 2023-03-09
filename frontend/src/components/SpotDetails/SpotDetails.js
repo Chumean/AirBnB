@@ -1,12 +1,14 @@
 import React from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
 import { useModal, ModalProvider } from "../../context/Modal";
 import { getAllReviews, removeReview } from "../../store/reviews";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import OpenModalButton from "../OpenModalButton";
+
+
 
 const SpotDetails = () => {
     const dispatch = useDispatch();
@@ -15,31 +17,40 @@ const SpotDetails = () => {
     const spots = useSelector(state => state.spots[spotId]);
     let reviews = useSelector(state => state.reviews);
 
+    // Filters only reviews that matches spot's id
     reviews = useSelector((state) =>
     Object.values(state.reviews).filter((review) => review.spotId === spots.id)
     );
 
     const {setModalContent} = useModal();
 
+    // Render spot details and its reviews
     useEffect(() => {
         dispatch(getSpotDetails(spotId))
         dispatch(getAllReviews(spotId))
     },[dispatch, spotId])
 
+    const [showModal, setShowModal] = useState(false);
 
+    const openModal = () => {
+        setShowModal(true);
+    }
+
+    const closeModal = () => {
+        setShowModal(false);
+    }
+
+    const handleDeleteReview = (reviewId, spotId) => {
+        setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
+        openModal();
+    }
+
+    // Delete a spot
     const handleDeleteSpot = async(e) => {
         e.preventDefault();
         await dispatch(deleteSpot(spotId));
-        history.push("/");
+        await history.push("/");
     }
-
-
-
-    const handleRemoveReview = async(reviewId) => {
-        await dispatch(removeReview(reviewId));
-        dispatch(getAllReviews(spotId))
-    }
-
 
 
     return (
@@ -60,11 +71,8 @@ const SpotDetails = () => {
                             <div key={review.id}>
                             <p>{review.review}</p>
                             <p>{review.stars} stars</p>
-                            <button>
-                                <OpenModalButton
-                                
-                                 />
-                                Delete Review
+                            <button onClick={() => handleDeleteReview(review.id, spots.id)}>
+                            Delete Review
                             </button>
 
                     </div>

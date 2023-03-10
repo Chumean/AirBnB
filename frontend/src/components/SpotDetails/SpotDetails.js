@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState} from "react";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
 import { useModal, ModalProvider } from "../../context/Modal";
-import { getAllReviews} from "../../store/reviews";
+import { deleteReview, getAllReviews} from "../../store/reviews";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 // import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import CreateReview from "../CreateReview/CreateReview";
@@ -15,20 +15,27 @@ const SpotDetails = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const {spotId} = useParams();
-    const spots = useSelector(state => state.spots[spotId]);
+    const spots = useSelector(state => {
+        // console.log('state.spots:', state.spots);
+
+        return state.spots[spotId]});
     let reviews = useSelector(state => state.reviews);
 
     // Filters only reviews that matches spot's id
+    // console.log('REVIEWS BEFORE FILTER', reviews);
+
     reviews = useSelector((state) =>
     Object.values(state.reviews).filter((review) => review.spotId === spots.id)
     );
+
+    // console.log("REVIEWS AFTER FILTER", reviews);
 
     const {setModalContent} = useModal();
 
     // Render spot details and its reviews
     useEffect(() => {
         dispatch(getSpotDetails(spotId))
-        dispatch(getAllReviews(spotId))
+        // dispatch(getAllReviews(spotId))
     },[dispatch, spotId])
 
     // Delete Review modals
@@ -50,6 +57,9 @@ const SpotDetails = () => {
     const handleDeleteReview =  async (reviewId, spotId) => {
         setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
         openModal();
+
+        await dispatch(deleteReview(reviewId));
+        // await dispatch(getAllReviews(spotId));
     }
 
     // Delete a spot
@@ -85,7 +95,7 @@ const SpotDetails = () => {
                     </div>
                     <div>
                         <h2>Reviews</h2>
-                            {Object.values(reviews).map(review => (
+                            {reviews && Object.values(reviews).map(review => (
                             <div key={review.id}>
                             <p>{review.review}</p>
                             <p>{review.stars} stars</p>

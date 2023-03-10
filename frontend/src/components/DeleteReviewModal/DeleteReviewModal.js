@@ -2,8 +2,10 @@ import { useDispatch } from "react-redux";
 import { getSpotDetails } from "../../store/spots";
 import { deleteReview } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
+import { useHistory } from "react-router-dom";
 
 const DeleteReviewModal = ({reviewId, spotId}) => {
+    const history = useHistory();
     const dispatch = useDispatch();
     const {closeModal} = useModal();
 
@@ -12,6 +14,7 @@ const DeleteReviewModal = ({reviewId, spotId}) => {
         await dispatch(deleteReview(reviewId))
         await dispatch(getSpotDetails(spotId));
         closeModal();
+        history.push(`/spots/${spotId}`)
     }
 
     return (

@@ -285,7 +285,7 @@ router.get('/:spotId', async (req, res) => {
 
 
 // Create a Spot DONE
-router.post('/', validateSpots, handleValidationErrors, async (req, res) => {
+router.post('/', validateSpots, handleValidationErrors, requireAuth, async (req, res) => {
 
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
@@ -298,8 +298,7 @@ router.post('/', validateSpots, handleValidationErrors, async (req, res) => {
 
 
 // Add an Image to a Spot based on Spot's id
-// error check invalid spot id
-router.post('/:spotId/images', async(req, res) =>{
+router.post('/:spotId/images', requireAuth, async(req, res) =>{
 
     const currentSpot = await Spot.findByPk(req.params.spotId);
 

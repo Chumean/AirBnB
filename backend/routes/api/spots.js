@@ -55,7 +55,7 @@ const validateReview = [
     .withMessage("Review text is required"),
     check('stars')
     .exists({checkFalsy: true})
-    .isDecimal()
+    .isFloat()
     .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors
 ];

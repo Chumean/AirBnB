@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState} from "react";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
 import { useModal, ModalProvider } from "../../context/Modal";
-import { getAllReviews, removeReview} from "../../store/reviews";
+import { getAllReviews} from "../../store/reviews";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
-import AddReviewModal from "../AddReviewModal/AddReviewModal";
+// import AddReviewModal from "../AddReviewModal/AddReviewModal";
+import CreateReview from "../CreateReview/CreateReview";
 
 
 
@@ -42,21 +43,12 @@ const SpotDetails = () => {
     }
 
     const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+    const [isReviewFormVisible, setIsReviewFormVisible] = useState(false);
 
-    const openAddReviewModal = () => {
-        setShowAddReviewModal(true);
-    }
-
-    const closeAddReviewModal = () => {
-        setShowAddReviewModal(false);
-    }
 
     // Delete a review
     const handleDeleteReview =  async (reviewId, spotId) => {
-        console.log("REVIEW ID" , reviewId);
-        console.log("SPOT ID", spotId)
         setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
-        // dispatch(removeReview(reviewId))
         openModal();
     }
 
@@ -70,6 +62,10 @@ const SpotDetails = () => {
     const handleAddReviewModal = () => {
         setShowAddReviewModal(true);
     }
+
+    const handleAddReviewClick = () => {
+        setIsReviewFormVisible(true);
+      };
 
 
     return (
@@ -100,21 +96,20 @@ const SpotDetails = () => {
 
                     </div>
                     ))}
-                    <button onClick={handleAddReviewModal}>Add a Review</button>
+
+                    {isReviewFormVisible && (
+                        <CreateReview spotId={spotId} />
+                        )}
+                    <button onClick={handleAddReviewClick}>Post Your Review</button>
                     </div>
-                    {showAddReviewModal && (
-                        <AddReviewModal
-                            openAddReviewModal={openAddReviewModal}
-                            handleAddReviewModal={handleAddReviewModal}
-                            closeAddReviewModal={closeAddReviewModal}
-                         />
-                    )}
+
 
                     <button onClick={handleDeleteSpot}>Remove Listing</button>
+
                     <Link to={`/spots/${spotId}/edit`} >
                         <button>Update Spot</button>
                     </Link>
-                    <button>Post Review</button>
+
                 </div>
             )}
         </div>

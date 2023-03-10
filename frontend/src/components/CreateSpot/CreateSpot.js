@@ -50,8 +50,7 @@ const CreateSpot = ({spot = {}}) => {
             setDescription('');
             setPrice(0)
         }
-        console.log("AFTER useHISTORY()")
-        console.log(newSpot)
+        
     };
 
 

@@ -48,12 +48,12 @@ export const createReview = (review) => async (dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({review: review.review, stars: review.stars}),
+    body: JSON.stringify(review),
   });
+
   if (response.ok) {
     const newReview = await response.json();
     dispatch(addReview(newReview));
-    dispatch(getSpotDetails(review.spotId))
     return newReview;
   }
 };

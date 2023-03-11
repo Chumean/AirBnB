@@ -56,3 +56,69 @@
   .hidden {
     display: none
   }
+
+  .login-label {
+    font-family: cursive;
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .login-input {
+    display: block;
+    /* width: 100%; */
+    background-color: #F5F8FA;
+    padding: 8px;
+    border: 2px solid black;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+
+  #modal-content h1 {
+    font-family: cursive;
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+  }
+
+  .login-modal-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+  }
+
+  .login-button {
+    display:block;
+    background-color: #FF5A5F;
+    color: white;
+  }
+
+  .login-button:disabled {
+    background-color: gray;
+  }
+
+  .login-input, .login-button {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  #modal-content {
+    border-radius: 20px;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+.error-message {
+  color: #FF5A5F;
+  font-family: cursive;
+  top: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}

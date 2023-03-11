@@ -37,10 +37,10 @@ function LoginFormModal() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className="login-modal-card">
+      <h1 className="modal-title">Log In</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
+        <ul className="error-message">
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
@@ -68,11 +68,12 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit"
+          className="login-button"
           disabled={isButtonDisabled}>
           Log In
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

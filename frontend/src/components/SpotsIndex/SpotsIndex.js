@@ -9,7 +9,6 @@ function SpotsIndex() {
   const spots = useSelector(state => state.spots)
   const spotsObj = Object.values(spots);
 
-  console.log("SPOTS", spots)
 
   useEffect(() => {
     dispatch(getAllSpots());

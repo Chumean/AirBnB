@@ -110,23 +110,24 @@ router.get('/', async (req, res) =>{
             'lng',
             'name',
             'description',
-            'price'
+            'price',
+            'previewImage'
         ]
     });
 
     for await(let spot of spots) {
-    const previewImage = await SpotImage.findOne({
-        where: {
-            spotId: spot.id,
-            preview: true
-            }
-        })
+    // const previewImage = await SpotImage.findOne({
+    //     where: {
+    //         spotId: spot.id,
+    //         preview: true
+    //         }
+    //     })
 
-         if(previewImage) {
-        spot.dataValues.previewImage = previewImage.url
-        } else {
-        spot.dataValues.previewImage = null;
-        }
+        //  if(previewImage) {
+        // spot.dataValues.previewImage = previewImage.url
+        // } else {
+        // spot.dataValues.previewImage = null;
+        // }
 
         const rating = await Review.findAll({
         where: {
@@ -172,23 +173,24 @@ router.get('/current', requireAuth, async(req, res) =>{
             'lng',
             'name',
             'description',
-            'price'
+            'price',
+            'previewImage'
         ]
     });
 
     for await(let spot of ownerSpots) {
-        const previewImg = await SpotImage.findOne({
-            where: {
-                spotId: spot.id,
-                preview: true
-            }
-        })
+        // const previewImg = await SpotImage.findOne({
+        //     where: {
+        //         spotId: spot.id,
+        //         preview: true
+        //     }
+        // })
 
-        if(previewImg) {
-            spot.dataValues.previewImg = previewImg.url
-        } else {
-            spot.dataValues.previewImg = null;
-        }
+        // if(previewImg) {
+        //     spot.dataValues.previewImg = previewImg.url
+        // } else {
+        //     spot.dataValues.previewImg = null;
+        // }
 
         const rating = await Review.findAll({
             where: {

@@ -16,6 +16,7 @@ const CreateSpot = ({spot = {}}) => {
     const [name, setName] = useState(spot.name || '');
     const [description, setDescription] = useState(spot.description || '');
     const [price, setPrice] = useState(spot.price || 0);
+    const [previewImage, setPreviewImage] = useState(spot.previewImage || '');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,6 +32,7 @@ const CreateSpot = ({spot = {}}) => {
             lng: lng,
             description: description,
             price: price,
+            previewImage: previewImage
         };
 
         let newSpot;
@@ -45,12 +47,13 @@ const CreateSpot = ({spot = {}}) => {
             setCity('');
             setState('');
             setCountry('');
-            setLat(0);
-            setLng(0);
+            setLat(null);
+            setLng(null);
             setDescription('');
-            setPrice(0)
+            setPrice(null)
+            setPreviewImage('');
         }
-        
+
     };
 
 
@@ -136,6 +139,15 @@ const CreateSpot = ({spot = {}}) => {
                 value={price}
                 onChange={e => setPrice(e.target.value)}
                  />
+            </label>
+
+            <label>
+                Preview Image
+                <input
+                type="text"
+                value={previewImage}
+                onChange={e => setPreviewImage(e.target.value)}
+                />
             </label>
             <input type="submit" value='Submit' />
 

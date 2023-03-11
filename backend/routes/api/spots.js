@@ -45,6 +45,10 @@ const validateSpots = [
     .exists({checkFalsy: true})
     .isNumeric()
     .withMessage('Price per day is required'),
+    check('previewImage')
+    .exists({checkFalsy: true})
+    .isString()
+    .withMessage("Preview Image is required."),
     handleValidationErrors
 ];
 
@@ -236,9 +240,9 @@ router.get('/:spotId', async (req, res) => {
 // Create a Spot DONE
 router.post('/', validateSpots, handleValidationErrors, requireAuth, async (req, res) => {
 
-    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
 
-    const spot = await Spot.create({ address, city, state, country, lat, lng, name, description, price, ownerId: req.user.id});
+    const spot = await Spot.create({ address, city, state, country, lat, lng, name, description, price, ownerId: req.user.id, previewImage});
 
     return res.json(spot);
 

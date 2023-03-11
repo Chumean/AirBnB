@@ -82,7 +82,7 @@ const SpotDetails = () => {
             {spots && (
                 <div>
                     <h2>{spots.name}</h2>
-                    <p>{spots.city}, {spots.state}, {spots.country}</p>
+                    <p className="spot-location">{spots.city}, {spots.state}, {spots.country}</p>
                     <img src={spots.previewImage}/>
 
                     <h2>Hosted By {spots.User?.firstName} {spots.User?.lastName}</h2>

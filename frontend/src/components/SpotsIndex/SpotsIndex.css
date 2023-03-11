@@ -115,3 +115,8 @@
     white-space: nowrap;
     opacity: 0.8;
   }
+.spot-avgRating {
+    position: relative;
+    left: 220px;
+    bottom: 100px;
+}

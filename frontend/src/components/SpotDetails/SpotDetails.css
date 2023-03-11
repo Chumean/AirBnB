@@ -11,3 +11,9 @@
   justify-content: center;
   align-items: center;
 }
+
+.spot-location {
+    font-size:large;
+    font-weight: bold;
+}
+

@@ -5,7 +5,8 @@ import { getAllSpots } from '../../store/spots';
 import { useParams } from 'react-router-dom';
 import { deleteSpot } from '../../store/spots';
 import { useHistory } from 'react-router-dom';
-
+import DeleteSpotModal from '../DeleteSpotModal/DeleteSpotModal';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
 const ManageSpots = () => {
   const history = useHistory();
@@ -16,17 +17,10 @@ const ManageSpots = () => {
 
 
   const filteredSpots = Object.values(spots).filter(spot => spot.ownerId === currentUser.id);
-    // console.log(filteredSpots)
+
   useEffect(() => {
     dispatch(getAllSpots());
   }, [dispatch]);
-
-  const handleDeleteSpot = async(e) => {
-    console.log("DELETE?")
-    e.preventDefault();
-    await dispatch(deleteSpot(spotId));
-    // await history.push("/spots/current");
-};
 
 
   return (
@@ -44,11 +38,14 @@ const ManageSpots = () => {
             />
           <button>Update</button>
 
-          <button
-            onClick={handleDeleteSpot}
-            // disabled={!currentUser}
-          >Delete
-          </button>
+            <button className='button-delete'>
+
+                <OpenModalMenuItem
+                  itemText={'Delete'}
+                  modalComponent={<DeleteSpotModal spotId={spot.id} />}
+                  />
+            </button>
+
 
         </div>
         ))}

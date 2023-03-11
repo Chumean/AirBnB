@@ -20,10 +20,10 @@ const SpotDetails = () => {
         return state.spots[spotId]});
     let reviews = useSelector(state => state.reviews);
 
-    
+
     // Filters only reviews that matches spot's id
     reviews = useSelector((state) =>
-    Object.values(state.reviews).filter((review) => review.spotId === spots.id)
+    Object.values(state.reviews).filter((review) => review?.spotId === spots?.id)
     );
 
     const sessionUser = useSelector(state => state.session.user);
@@ -58,9 +58,6 @@ const SpotDetails = () => {
     const handleDeleteReview =  async (reviewId, spotId) => {
         setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
         openModal();
-
-        // await dispatch(deleteReview(reviewId));
-        // await dispatch(getAllReviews(spotId));
     }
 
     // Delete a spot

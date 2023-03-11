@@ -6,7 +6,7 @@ import { getSpotDetails, deleteSpot } from "../../store/spots";
 import { useModal, ModalProvider } from "../../context/Modal";
 import { deleteReview, getAllReviews} from "../../store/reviews";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
-// import AddReviewModal from "../AddReviewModal/AddReviewModal";
+import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import CreateReview from "../CreateReview/CreateReview";
 import "./SpotDetails.css";
 
@@ -47,7 +47,10 @@ const SpotDetails = () => {
         setShowModal(false);
     }
 
+    // Add Review Modal useState
     const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+
+    // Create Review Modal useState
     const [isReviewFormVisible, setIsReviewFormVisible] = useState(false);
 
 
@@ -67,10 +70,12 @@ const SpotDetails = () => {
         await history.push("/");
     };
 
+    // Add Review Modal
     const handleAddReviewModal = () => {
         setShowAddReviewModal(true);
     }
 
+    // Create Review
     const handleAddReviewClick = () => {
         setIsReviewFormVisible(true);
       };
@@ -116,7 +121,8 @@ const SpotDetails = () => {
                         onClick={handleAddReviewClick}
                         className="add-review-button"
                         disabled={!sessionUser}
-                        >Post Your Review
+                        >
+                            Post Your Review
                         </button>
                     </div>
 
@@ -128,7 +134,7 @@ const SpotDetails = () => {
                     </button>
 
                     <Link to={`/spots/${spotId}/edit`} >
-                        <button>Update Spot</button>
+                        <button disabled={!sessionUser}>Update Spot</button>
                     </Link>
 
                 </div>

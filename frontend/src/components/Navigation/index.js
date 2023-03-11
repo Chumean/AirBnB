@@ -53,6 +53,7 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import AirbnbLogo from './Airbnblogo';
 
+
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 

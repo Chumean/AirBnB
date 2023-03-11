@@ -1,63 +1,70 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addReview, createReview } from "../../store/reviews";
-import StarRating from "../StarRating";
-import { useSelector } from "react-redux";
+import { addReview } from "../../store/reviews";
+import { useModal } from "../../context/Modal";
+// import "./AddReviewModal.css";
 
-const CreateReviewModal = ({ spotId, onClose }) => {
-    const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user.id);
+const AddReviewModal = ({ spotId }) => {
+  const dispatch = useDispatch();
+  const { closeModal } = useModal();
+  const [review, setReview] = useState("");
+  const [stars, setStars] = useState("");
 
-    const [review, setReview] = useState('');
-    const [stars, setStars] = useState(0);
-    const [error, setError] = useState('');
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const newReviewInput = {
-            spotId: spotId,
-            review: review,
-            stars: stars
-        };
-
-        const newReview = await dispatch(createReview(newReviewInput));
-
-        if (newReview) {
-            dispatch(addReview(newReview));
-            onClose();
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      review,
+      stars,
+      spotId,
     };
+    await dispatch(addReview(payload));
+    closeModal();
+  };
 
-    return (
-        <div className="modal">
-            <div className="modal-content">
-                <h2>Submit Your Review</h2>
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Review
-                        <input
-                            type="textarea"
-                            value={review}
-                            onChange={e => setReview(e.target.value)}
-                        />
-                    </label>
+  const handleCancel = () => {
+    closeModal();
+  };
 
-                    <label>
-                        Stars
-                        <StarRating key={spotId} setStars={setStars} />
-                    </label>
-
-                    <div className="modal-actions">
-                        <button type="button" onClick={onClose}>
-                            Cancel
-                        </button>
-                        <button type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
+  return (
+    <div className="add-review-modal">
+      <h2>Add a Review</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="review">Review</label>
+          <textarea
+            id="review"
+            name="review"
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            required
+          />
         </div>
-    );
+        <div className="form-group">
+          <label htmlFor="stars">Stars</label>
+          <select
+            id="stars"
+            name="stars"
+            value={stars}
+            onChange={(e) => setStars(e.target.value)}
+            required
+          >
+            <option value="">-- Select --</option>
+            <option value="1">1 star</option>
+            <option value="2">2 stars</option>
+            <option value="3">3 stars</option>
+            <option value="4">4 stars</option>
+            <option value="5">5 stars</option>
+          </select>
+        </div>
+        <div className="form-actions">
+          <button type="submit">Submit</button>
+          <button type="button" onClick={handleCancel}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 };
 
-export default CreateReviewModal;
+export default AddReviewModal;

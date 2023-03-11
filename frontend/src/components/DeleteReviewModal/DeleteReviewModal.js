@@ -16,7 +16,7 @@ const DeleteReviewModal = ({reviewId, spotId}) => {
         await dispatch(getAllReviews(spotId))
 
         closeModal();
-        // history.push(`/spots/${spotId}`)
+        
     }
 
     return (

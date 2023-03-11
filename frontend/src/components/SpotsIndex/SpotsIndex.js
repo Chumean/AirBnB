@@ -7,9 +7,9 @@ import "./SpotsIndex.css";
 function SpotsIndex() {
   const dispatch = useDispatch();
   const spots = useSelector(state => state.spots)
-  const spotsOBj = Object.values(spots);
+  const spotsObj = Object.values(spots);
 
-
+  console.log("SPOTS", spots)
 
   useEffect(() => {
     dispatch(getAllSpots());
@@ -20,11 +20,12 @@ function SpotsIndex() {
     <div className='spots-container'>
       <h1>Spots</h1>
       <ul className='spots-list'>
-        {spotsOBj.map(spot => (
+        {spotsObj.map(spot => (
             <SpotsIndexItem
             key={spot.id}
             spot={spot}
-            spotsOBj={spotsOBj}
+            previewImage={spot.previewImage}
+            spotsOBj={spotsObj}
             />
         ))}
       </ul>

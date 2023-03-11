@@ -8,7 +8,7 @@ import { deleteReview, getAllReviews} from "../../store/reviews";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 // import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import CreateReview from "../CreateReview/CreateReview";
-
+import "./SpotDetails.css";
 
 
 const SpotDetails = () => {
@@ -16,26 +16,24 @@ const SpotDetails = () => {
     const history = useHistory();
     const {spotId} = useParams();
     const spots = useSelector(state => {
-        // console.log('state.spots:', state.spots);
 
         return state.spots[spotId]});
     let reviews = useSelector(state => state.reviews);
 
+    console.log(spots);
     // Filters only reviews that matches spot's id
-    // console.log('REVIEWS BEFORE FILTER', reviews);
-
     reviews = useSelector((state) =>
     Object.values(state.reviews).filter((review) => review.spotId === spots.id)
     );
 
-    // console.log("REVIEWS AFTER FILTER", reviews);
+    const sessionUser = useSelector(state => state.session.user);
 
     const {setModalContent} = useModal();
 
     // Render spot details and its reviews
     useEffect(() => {
         dispatch(getSpotDetails(spotId))
-        // dispatch(getAllReviews(spotId))
+        dispatch(getAllReviews(spotId))
     },[dispatch, spotId])
 
     // Delete Review modals
@@ -58,7 +56,7 @@ const SpotDetails = () => {
         setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
         openModal();
 
-        await dispatch(deleteReview(reviewId));
+        // await dispatch(deleteReview(reviewId));
         // await dispatch(getAllReviews(spotId));
     }
 
@@ -81,18 +79,21 @@ const SpotDetails = () => {
     return (
     <ModalProvider>
         <div>
-            <h2>DETAILS</h2>
             {spots && (
                 <div>
+                    <h2>{spots.name}</h2>
                     <p>{spots.city}, {spots.state}, {spots.country}</p>
                     <img src={spots.previewImage}/>
 
                     <h2>Hosted By {spots.User?.firstName} {spots.User?.lastName}</h2>
                     <p>{spots.description}</p>
+
                     <div>${spots.price} night</div>
                     <div>
                         <button>Reserve</button>
                     </div>
+                    <hr style={{borderWidth: "1px", borderColor: "black"}}/>
+
                     <div>
                         <h2>Reviews</h2>
                             {reviews && Object.values(reviews).map(review => (
@@ -100,7 +101,7 @@ const SpotDetails = () => {
                             <p>{review.review}</p>
                             <p>{review.stars} stars</p>
 
-                            <button onClick={() => handleDeleteReview(review.id, spots.id)}>
+                            <button onClick={() => handleDeleteReview(review.id, spots.id)} disabled={!sessionUser}>
                             Delete Review
                             </button>
 
@@ -110,11 +111,21 @@ const SpotDetails = () => {
                     {isReviewFormVisible && (
                         <CreateReview spotId={spotId} />
                         )}
-                    <button onClick={handleAddReviewClick}>Post Your Review</button>
+
+                    <button
+                        onClick={handleAddReviewClick}
+                        className="add-review-button"
+                        disabled={!sessionUser}
+                        >Post Your Review
+                        </button>
                     </div>
 
 
-                    <button onClick={handleDeleteSpot}>Remove Listing</button>
+                    <button
+                        onClick={handleDeleteSpot}
+                        disabled={!sessionUser}
+                        >Remove Listing
+                    </button>
 
                     <Link to={`/spots/${spotId}/edit`} >
                         <button>Update Spot</button>

@@ -23,10 +23,10 @@ module.exports = {
         name: "Bat Cave",
         description: "Batman's secret hideout",
         price: 100000,
+        previewImage: "https://res.cloudinary.com/dsu4khzr3/image/upload/c_scale,h_300,w_300/v1677728223/batcave_wdsrg4.jpg"
         // "createdAt": "2021-11-19 20:39:36",
         // "updatedAt": "2021-11-19 20:39:36",
         // "avgRating": 4.5,
-        // "previewImage": "image url"
       },
 
       {
@@ -40,10 +40,10 @@ module.exports = {
         name: "Death Star",
         description: "Definitely not a moon",
         price: 500000,
+        previewImage: "https://res.cloudinary.com/dsu4khzr3/image/upload/c_scale,h_300,w_300/v1677728232/deathstar_xmu9zz.webp"
         // "createdAt": "2021-11-19 20:39:36",
         // "updatedAt": "2021-11-19 20:39:36",
         // "avgRating": 2.7,
-        // "previewImage": "image url"
       },
 
       {
@@ -57,10 +57,10 @@ module.exports = {
         name: "Cafe LeBlanc",
         description: "Coffee and Curry",
         price: 333,
+        previewImage: "https://res.cloudinary.com/dsu4khzr3/image/upload/c_scale,h_300,w_300/v1678079825/danny-greenan-highresscreenshot00009_eqmihe.jpg"
         // "createdAt": "2021-11-19 20:39:36",
         // "updatedAt": "2021-11-19 20:39:36",
         // "avgRating": 1.5,
-        // "previewImage": "image url"
       }
     ], {});
 

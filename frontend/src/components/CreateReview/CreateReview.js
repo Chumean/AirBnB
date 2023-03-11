@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addReview, createReview } from "../../store/reviews";
+import { addReview, createReview, getAllReviews } from "../../store/reviews";
 import StarRating from "../StarRating";
 import { useSelector } from "react-redux";
 
@@ -29,10 +29,11 @@ const CreateReview = ({reviews, spotId}) => {
         let newReview;
         newReview = await dispatch(createReview(newReviewInput));
 
-        if(newReview) {
-            dispatch(addReview(newReview));
-            // history.push(`/spots/${spotId}`);
-        }
+        // if(newReview) {
+            await dispatch(addReview(newReview));
+            await dispatch(getAllReviews(spotId))
+            history.push(`/spots/${spotId}`);
+        // }
 
     };
 

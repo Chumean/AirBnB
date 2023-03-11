@@ -20,8 +20,8 @@ module.exports = {
         spotId: 2
       },
       {
-        url: "https://res.cloudinary.com/dsu4khzr3/image/upload/c_scale,h_300,w_300/v1677728232/deathstar_xmu9zz.webp",
-        preview: false,
+        url: "https://res.cloudinary.com/dsu4khzr3/image/upload/c_scale,h_300,w_300/v1678079825/danny-greenan-highresscreenshot00009_eqmihe.jpg",
+        preview: true,
         spotId: 3
       }
     ], {})

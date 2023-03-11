@@ -1,0 +1,13 @@
+.add-review-button {
+    color: white;
+  background-color: darkgray;
+  border: 3px solid black;
+  padding: 10px 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+  height: 30px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

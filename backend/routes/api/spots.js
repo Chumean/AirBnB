@@ -79,8 +79,8 @@ const validateQuery = [
     check('page')
 
 ]
+
 // Get All Spots
-// to do add avgrating and preview image - DONE
 router.get('/', async (req, res) =>{
     let {page, size} = req.query;
 
@@ -211,11 +211,7 @@ router.get('/current', requireAuth, async(req, res) =>{
 });
 
 // Get details of a Spot From An id
-// to do check for no spot id error
 router.get('/:spotId', async (req, res) => {
-
-
-    // const oneSpot = await Spot.findByPk(req.params.spotId);
 
     const oneSpot = await Spot.findByPk(req.params.spotId, {
         include: [
@@ -224,55 +220,8 @@ router.get('/:spotId', async (req, res) => {
             ]
         })
 
-    // const images = await SpotImage.findAll({
-    //         where: {
-    //             spotId: req.params.SpotImages.spotId
-    //         }
-    //     })
-
-    // oneSpot.dataValues.SpotImages = images;
-
-
-    // const previewImage = await SpotImage.findOne({
-    //         where: {
-    //             spotId: req.params.spotId,
-
-    //         }
-    //     })
-
-    // if(previewImage) {
-    //         oneSpot.previewImage = previewImage.url
-    //     } else {
-    //         oneSpot.previewImage = null;
-    //     }
-
     const user = await User.findByPk(req.params.userId);
 
-    // const owner = await User.findOne({
-    //     where: {
-    //         userId: req.params.ownerId
-    //     }
-    // })
-    //     oneSpot.dataValues.Owner = owner;
-
-    // const rating = await Review.findAll({
-    //         where: {spotId: oneSpot.id}
-    //     })
-
-    // let sum = 0;
-
-    // if(rating.length) {
-
-    //         rating.forEach(ele => {
-    //             sum += ele.stars
-    //         });
-
-    //         let avg = sum / rating.length
-
-    //         oneSpot.dataValues.avgRating = avg;
-    // } else {
-    //     oneSpot.dataValues.avgRating = null;
-    // }
 
     if(!oneSpot){
 

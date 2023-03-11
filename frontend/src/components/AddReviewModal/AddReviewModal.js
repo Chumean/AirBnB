@@ -1,23 +1,63 @@
-import React, {useState} from 'react';
-import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
-import ReviewRatingInput from '../ReviewRatingInput';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addReview, createReview } from "../../store/reviews";
+import StarRating from "../StarRating";
+import { useSelector } from "react-redux";
 
-function AddReviewModal({review, onSubmit, closeForm, formType}) {
+const CreateReviewModal = ({ spotId, onClose }) => {
     const dispatch = useDispatch();
-    const [reviewBody, setReviewBody] = useState('');
+    const sessionUser = useSelector(state => state.session.user.id);
+
+    const [review, setReview] = useState('');
     const [stars, setStars] = useState(0);
-    const [errors, setErrors] = useState([]);
-    const { closeModal } = useModal();
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors([]);
 
-        await dispatch(onSubmit({...review, stars}));
-        closeForm();
+        const newReviewInput = {
+            spotId: spotId,
+            review: review,
+            stars: stars
+        };
 
+        const newReview = await dispatch(createReview(newReviewInput));
+
+        if (newReview) {
+            dispatch(addReview(newReview));
+            onClose();
+        }
     };
-}
 
-export default AddReviewModal;
+    return (
+        <div className="modal">
+            <div className="modal-content">
+                <h2>Submit Your Review</h2>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Review
+                        <input
+                            type="textarea"
+                            value={review}
+                            onChange={e => setReview(e.target.value)}
+                        />
+                    </label>
+
+                    <label>
+                        Stars
+                        <StarRating key={spotId} setStars={setStars} />
+                    </label>
+
+                    <div className="modal-actions">
+                        <button type="button" onClick={onClose}>
+                            Cancel
+                        </button>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default CreateReviewModal;

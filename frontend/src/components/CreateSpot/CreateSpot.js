@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createSpot } from '../../store/spots';
+import './CreateSpot.css';
 
 const CreateSpot = ({spot = {}}) => {
     const history = useHistory();
@@ -58,100 +59,137 @@ const CreateSpot = ({spot = {}}) => {
 
 
     return (
+        <div className='createspot-form-container'>
         <form onSubmit={handleSubmit}>
+            <h1 className='create-form-header'>Create A Spot</h1>
+            <h2 className='create-form-header'>Where's your place located?</h2>
+            <h4 className='create-form-header'>Guests will only get your exact address once they booked a reservation</h4>
 
-            <label>
-                Name
+            <label className='spot-label'>
+                <h2>Create a title for your spot</h2>
+                <h3>Catch guests' attention with a spot title that highlights what makes your place special</h3>
                 <input
+                className='spot-input'
                 type='text'
+                placeholder='Name of your spot'
                 value={name}
                 onChange={e => setName(e.target.value)}
                  />
             </label>
 
-            <label>
-                Address
+            <label className='spot-label'>
+                <h3>Address</h3>
                 <input
+                className='spot-input'
                 type='text'
+                placeholder='Address'
                 value={address}
                 onChange={e => setAddress(e.target.value)}
                  />
             </label>
 
-            <label>
-                City
+            <label className='spot-label'>
+                <h3>City</h3>
                 <input
+                className='spot-input'
                 type='text'
+                placeholder='City'
                 value={city}
                 onChange={e => setCity(e.target.value)}
                  />
             </label>
 
-            <label>
-                State
+            <label className='spot-label'>
+                <h3>State</h3>
                 <input
+                className='spot-input'
                 type='text'
+                placeholder='State'
                 value={state}
                 onChange={e => setState(e.target.value)}
                  />
             </label>
 
-            <label>
-                Country
+            <label className='spot-label'>
+                <h3>Country</h3>
                 <input
+                className='spot-input'
                 type='text'
+                placeholder='Country'
                 value={country}
                 onChange={e => setCountry(e.target.value)}
                  />
             </label>
 
-            <label>
-                Latitude
+            <hr className='spot-line-break' />
+            
+            <label className='spot-label'>
+                <h3>Latitude</h3>
                 <input
+                className='spot-input'
                 type='text'
+                placeholder='Latitude'
                 value={lat}
                 onChange={e => setLat(e.target.value)}
                  />
             </label>
 
-            <label>
-                Longitude
+            <label className='spot-label'>
+                <h3>Longitude</h3>
                 <input
+                className='spot-input'
                 type='text'
+                placeholder='Longitude'
                 value={lng}
                 onChange={e => setLng(e.target.value)}
                  />
             </label>
 
-            <label>
-                Description
-                <input
-                type='text'
+            <label className='spot-label'>
+
+                <textarea
+                className='spot-input'
+                placeholder='Please write at least 30 characters'
                 value={description}
                 onChange={e => setDescription(e.target.value)}
                  />
             </label>
 
-            <label>
-                Price
+            <label className='spot-label'>
+                <h4>
+                Set a base price for your spot
+
+                </h4>
                 <input
+                className='spot-input'
                 type='text'
+                placeholder='Price per night (USD)'
                 value={price}
                 onChange={e => setPrice(e.target.value)}
                  />
             </label>
 
-            <label>
-                Preview Image
+            <label className='spot-label'>
+
                 <input
+                className='spot-input'
+                placeholder='Preview Image URL'
                 type="text"
                 value={previewImage}
                 onChange={e => setPreviewImage(e.target.value)}
                 />
             </label>
-            <input type="submit" value='Submit' />
+
+            <hr className='spot-line-break' />
+
+            <button
+            className='submit-spot'
+            type="submit">
+                Create Spot
+            </button>
 
         </form>
+        </div>
     )
 
 }

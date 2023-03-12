@@ -34,20 +34,5 @@ function DeleteSpotModal({ spotId }) {
   );
 }
 
-// function DeleteSpotMenuItem({ spotId }) {
-//   const { setModalContent, setOnModalClose } = useModal();
-
-//   const onOpen = () => {
-//     // Set the modal content to the DeleteSpotModal component
-//     setModalContent(<DeleteSpotModal spotId={spotId} />);
-//     // Set the onModalClose callback function to clear the modal content and onModalClose
-//     setOnModalClose(() => {
-//       setModalContent(null);
-//       setOnModalClose(null);
-//     });
-//   };
-
-//   return <OpenModalMenuItem modalComponent={<DeleteSpotModal spotId={spotId} />} itemText="Delete" onItemClick={onOpen} />;
-// }
 
 export default DeleteSpotModal;

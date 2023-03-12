@@ -34,7 +34,7 @@
   margin-bottom: 10px;
 }
 
-button[type="submit"] {
+/* button[type="submit"] {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -42,8 +42,8 @@ button[type="submit"] {
   border-radius: 4px;
   cursor: pointer;
   float: right;
-}
+} */
 
-button[type="submit"]:hover {
+/* button[type="submit"]:hover {
   background-color: #45a049;
-}
+} */

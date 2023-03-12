@@ -3,9 +3,11 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState} from "react";
 import { getSpotDetails, deleteSpot } from "../../store/spots";
-import { useModal, ModalProvider } from "../../context/Modal";
-import { deleteReview, getAllReviews} from "../../store/reviews";
+import { useModal } from "../../context/Modal";
+import { getAllReviews} from "../../store/reviews";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
+import DeleteSpotModal from "../DeleteSpotModal/DeleteSpotModal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import CreateReview from "../CreateReview/CreateReview";
 import "./SpotDetails.css";
@@ -18,13 +20,13 @@ const SpotDetails = () => {
     const spots = useSelector(state => {
 
         return state.spots[spotId]});
-    let reviews = useSelector(state => state.reviews);
+    const reviews = useSelector(state => state.reviews);
 
-
+    // console.log(reviews)
     // Filters only reviews that matches spot's id
-    reviews = useSelector((state) =>
-    Object.values(state.reviews).filter((review) => review?.spotId === spots?.id)
-    );
+    const filteredReviews = Object.values(reviews).filter((review) => review?.spotId === spots?.id)
+
+    console.log('FILTERED',filteredReviews)
 
     const sessionUser = useSelector(state => state.session.user);
 
@@ -67,6 +69,8 @@ const SpotDetails = () => {
         await history.push("/");
     };
 
+
+
     // Add Review Modal
     const handleAddReviewModal = () => {
         setShowAddReviewModal(true);
@@ -79,7 +83,7 @@ const SpotDetails = () => {
 
 
     return (
-    <ModalProvider>
+
         <div>
             {spots && (
                 <div>
@@ -94,11 +98,13 @@ const SpotDetails = () => {
                     <div>
                         <button>Reserve</button>
                     </div>
+
+                    <div>{spots?.avgRating}</div>
                     <hr style={{borderWidth: "1px", borderColor: "black"}}/>
 
                     <div>
                         <h2>Reviews</h2>
-                            {reviews && Object.values(reviews).map(review => (
+                            {filteredReviews && (filteredReviews).map(review => (
                             <div key={review.id}>
                             <p>{review.review}</p>
                             <p>{review.stars} stars</p>
@@ -124,10 +130,11 @@ const SpotDetails = () => {
                     </div>
 
 
-                    <button
-                        onClick={handleDeleteSpot}
-                        disabled={!sessionUser}
-                        >Remove Listing
+                    <button className="detail-delete-spot-button">
+                        <OpenModalMenuItem
+                        itemText={'Delete'}
+                        modalComponent={<DeleteSpotModal spotId={spotId} />}
+                        />
                     </button>
 
                     <Link to={`/spots/${spotId}/edit`} >
@@ -137,7 +144,6 @@ const SpotDetails = () => {
                 </div>
             )}
         </div>
-    </ModalProvider>
     )
 
 }

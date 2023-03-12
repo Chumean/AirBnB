@@ -229,9 +229,30 @@ router.get('/:spotId', async (req, res) => {
     const user = await User.findByPk(req.params.userId);
 
 
+
     if(!oneSpot){
 
         return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+    }
+
+    const reviews = await Review.findAll({
+        where: {
+            spotId: oneSpot.id
+        }
+    })
+
+    let sum = 0;
+
+    if(reviews.length) {
+        reviews.forEach(ele => {
+            sum += ele.stars
+        });
+
+        let avg = sum / reviews.length;
+
+        oneSpot.dataValues.avgRating = avg;
+    } else {
+        oneSpot.dataValues.avgRating = null;
     }
 
     res.json(oneSpot)
@@ -330,7 +351,7 @@ router.get('/:spotId/reviews', async (req, res) =>{
 
     const spot = await Spot.findByPk(req.params.spotId)
 
-if(spot) {
+    if(spot) {
 
     reviews = await Review.findAll({
         attributes: {
@@ -353,6 +374,35 @@ if(spot) {
     }
     return res.json(reviews);
 });
+
+// router.get("/:spotId/reviews", async (req, res) => {
+//     const spotReviews = await Review.findAll({
+//       where: {
+//         spotId: req.params.spotId,
+//       },
+//       include: [
+//         {
+//           model: User,
+//           attributes: ["id", "firstName", "lastName"],
+//           subQuery: false,
+//         },
+//         {
+//           model: ReviewImage,
+//           attributes: ["id", "url"],
+//           subQuery: false,
+//         },
+//       ],
+//     });
+//     const spot = await Spot.findByPk(req.params.spotId);
+//     if (spot === null) {
+//       res
+//         .status(404)
+//         .json({ message: "Spot could not be found", statusCode: 404 });
+//     }
+
+
+//     res.json(spotReviews);
+//   });
 
 
 // Create a Review for spot on Spot's id DONE

@@ -36,7 +36,7 @@ export const getAllReviews = (spotId) => async (dispatch) => {
 
   if (response.ok) {
     const reviews = await response.json();
-
+    
     dispatch(loadReviews(reviews));
   }
 };
@@ -61,11 +61,11 @@ export const createReview = (review) => async (dispatch) => {
 
 // delete review thunk
 export const deleteReview = (reviewId) => async (dispatch) => {
-    console.log(reviewId)
+
     const res = await csrfFetch(`/api/reviews/${reviewId}`, {
       method: "DELETE",
     });
-    console.log(res)
+
 
     if (res.ok) {
       const reviews = await res.json()
@@ -83,7 +83,8 @@ const reviewsReducer = (state = initialState, action) => {
 
     case LOAD_REVIEWS:
       const loadState = {};
-      action.reviews.forEach(review => loadState[review.spotId] = review);
+      action.reviews.forEach(review => loadState[review.id] = review);
+
       return {...state, ...loadState}
 
     case ADD_REVIEW:

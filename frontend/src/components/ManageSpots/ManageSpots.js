@@ -36,7 +36,7 @@ const ManageSpots = () => {
             />
 
           <Link
-            to={`/spots/${spotId}/edit`}>
+            to={`/spots/${spot.id}/edit`}>
             <button
             className='manage-update-button'
             disabled={!currentUser}>Update</button>

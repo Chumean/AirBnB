@@ -2,14 +2,12 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SpotsIndexItem from '../SpotsIndexItem';
 import { getAllSpots } from '../../store/spots';
-import { useParams } from 'react-router-dom';
-import { deleteSpot } from '../../store/spots';
-import { useHistory } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import DeleteSpotModal from '../DeleteSpotModal/DeleteSpotModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import './ManageSpots.css';
 
 const ManageSpots = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const {spotId} = useParams();
   const currentUser = useSelector((state) => state.session?.user);
@@ -26,7 +24,7 @@ const ManageSpots = () => {
   return (
 
     <div className='spots-container'>
-      <h1>My Spots</h1>
+      <h1 className='my-manage-spots'>My Spots</h1>
       <ul className='spots-list'>
         {filteredSpots.map(spot => (
         <div key={spot.id}>
@@ -36,16 +34,20 @@ const ManageSpots = () => {
             spot={spot}
             previewImage={spot.previewImage}
             />
-          <button>Update</button>
 
-            <button className='button-delete'>
+          <Link
+            to={`/spots/${spotId}/edit`}>
+            <button
+            className='manage-update-button'
+            disabled={!currentUser}>Update</button>
+          </Link>
 
-                <OpenModalMenuItem
-                  itemText={'Delete'}
-                  modalComponent={<DeleteSpotModal spotId={spot.id} />}
-                  />
-            </button>
-
+          <button className='manage-button'>
+            <OpenModalMenuItem
+              itemText={'Delete'}
+              modalComponent={<DeleteSpotModal spotId={spot.id} />}
+              />
+          </button>
 
         </div>
         ))}

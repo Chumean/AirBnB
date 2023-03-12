@@ -24,6 +24,7 @@ const SpotsIndexItem = ({spot, previewImage}) => {
           <p>${spot.price} night</p>
 
           <div>
+
           <p className="spot-avgRating">{spot.avgRating}</p>
 
           </div>

@@ -53,7 +53,7 @@ module.exports = {
         name: "Cafe LeBlanc",
         description: "Coffee and Curry",
         price: 333,
-        previewImage: "https://res.cloudinary.com/dsu4khzr3/image/upload/v1677728223/batcave_wdsrg4.jpg"
+        previewImage: "https://res.cloudinary.com/dsu4khzr3/image/upload/v1678079825/danny-greenan-highresscreenshot00009_eqmihe.jpg"
 
       }
     ], {});

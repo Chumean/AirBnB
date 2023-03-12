@@ -1,5 +1,5 @@
 import { csrfFetch } from './csrf';
-import { getSpotDetails } from './spots';
+
 
 // action types
 const LOAD_REVIEWS = "reviews/LOAD_REVIEWS";

@@ -33,12 +33,12 @@ const EditSpotForm = ({ spot, onSubmit }) => {
     <div className='edit-spot-form-container'>
 
     <form onSubmit={handleSubmit}>
-            <h1 className='create-form-header'>Create A Spot</h1>
+            <h1 className='create-form-header'>Update Your Spot</h1>
             <h2 className='create-form-header'>Where's your place located?</h2>
             <h4 className='create-form-header'>Guests will only get your exact address once they booked a reservation</h4>
 
       <label className='edit-label'>
-        Name
+        <h3>Name</h3>
         <input
         className='edit-input'
         type="text"
@@ -47,7 +47,7 @@ const EditSpotForm = ({ spot, onSubmit }) => {
       </label>
 
       <label className='edit-label'>
-        Address:
+        <h3>Address</h3>
         <input
         className='edit-input'
         type="text"
@@ -56,7 +56,7 @@ const EditSpotForm = ({ spot, onSubmit }) => {
       </label>
 
       <label className='edit-label'>
-        City
+      <h3>City</h3>
         <input
         className='edit-input'
         type="text" value={city}
@@ -64,7 +64,8 @@ const EditSpotForm = ({ spot, onSubmit }) => {
       </label>
 
       <label className='edit-label'>
-        State
+      <h3>State</h3>
+
         <input
         className='edit-input'
         type="text"
@@ -73,7 +74,7 @@ const EditSpotForm = ({ spot, onSubmit }) => {
       </label>
 
       <label className='edit-label'>
-        Country
+      <h3>Country</h3>
         <input
         className='edit-input'
         type="text"
@@ -84,7 +85,7 @@ const EditSpotForm = ({ spot, onSubmit }) => {
       <hr className='spot-line-break' />
 
       <label className='edit-label'>
-        Latitude
+      <h3>Latitude</h3>
         <input
         className='edit-input'
         type="text"
@@ -93,7 +94,7 @@ const EditSpotForm = ({ spot, onSubmit }) => {
       </label>
 
       <label className='edit-label'>
-        Longitude
+      <h3>Longitude</h3>
         <input
         className='edit-input'
         type="text"
@@ -102,7 +103,7 @@ const EditSpotForm = ({ spot, onSubmit }) => {
       </label>
 
       <label className='edit-label'>
-        Description
+      <h3>Description</h3>
         <textarea
         className='edit-input'
         value={description}
@@ -110,7 +111,7 @@ const EditSpotForm = ({ spot, onSubmit }) => {
       </label>
 
       <label className='edit-label'>
-        Price
+      <h3>Price</h3>
         <input
         className='edit-input'
         type="text"

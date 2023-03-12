@@ -1,0 +1,30 @@
+.manage-button {
+    font-family: cursive;
+    background-color: gray;
+    color: white;
+    border: 3px solid black;
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px 1px black;
+    width: 100px;
+}
+
+.my-manage-spots {
+    font-family: cursive;
+}
+
+.manage-update-button{
+    font-size: 21px;
+    font-family: cursive;
+    background-color: gray;
+    color: white;
+    border: 3px solid black;
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px 1px black;
+    width: 100px;
+    height: 57px;
+    position: relative;
+}

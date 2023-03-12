@@ -16,7 +16,6 @@ const EditSpot = () => {
 
   return (
     <div>
-      <h2>Update Spot</h2>
       {spot && <EditSpotForm spot={spot} onSubmit={handleSubmit} />}
     </div>
   );

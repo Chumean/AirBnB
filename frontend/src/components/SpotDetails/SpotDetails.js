@@ -22,11 +22,7 @@ const SpotDetails = () => {
         return state.spots[spotId]});
     const reviews = useSelector(state => state.reviews);
 
-    // console.log(reviews)
-    // Filters only reviews that matches spot's id
     const filteredReviews = Object.values(reviews).filter((review) => review?.spotId === spots?.id)
-
-    console.log('FILTERED',filteredReviews)
 
     const sessionUser = useSelector(state => state.session.user);
 

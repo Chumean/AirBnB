@@ -94,16 +94,23 @@ const SpotDetails = () => {
                     <h2>Hosted By {spots.User?.firstName} {spots.User?.lastName}</h2>
                     <p>{spots.description}</p>
 
-                    <div>${spots.price} night</div>
-                    <div>
-                        <button>Reserve</button>
+                <div className="reserve-container-wrapper">
+                    <div className="reserve-container">
+
+                        <div className="reserve-info">
+                            ${spots.price}  night  <i className="fa-solid fa-star"></i> {spots?.avgRating}  ({filteredReviews.length}) reviews
+                        </div>
+
+                        <div>
+                            <button className="reserve-button">Reserve</button>
+                        </div>
                     </div>
 
-                    <div>{spots?.avgRating}</div>
+                </div>
                     <hr style={{borderWidth: "1px", borderColor: "black"}}/>
 
                     <div>
-                        <h2>Reviews</h2>
+                    <h2>{filteredReviews.length === 1 ? "Review" : "Reviews"} ({filteredReviews.length === 0 ? "New" : filteredReviews.length})</h2>
                             {filteredReviews && (filteredReviews).map(review => (
                             <div key={review.id}>
                             <p>{review.review}</p>
@@ -116,7 +123,7 @@ const SpotDetails = () => {
                     </div>
                     ))}
 
-                    {isReviewFormVisible && (
+                    {sessionUser && isReviewFormVisible && (
                         <CreateReview spotId={spotId} />
                         )}
 
@@ -130,16 +137,16 @@ const SpotDetails = () => {
                     </div>
 
 
-                    <button className="detail-delete-spot-button">
+                    {/* <button className="detail-delete-spot-button">
                         <OpenModalMenuItem
                         itemText={'Delete'}
                         modalComponent={<DeleteSpotModal spotId={spotId} />}
                         />
-                    </button>
+                    </button> */}
 
-                    <Link to={`/spots/${spotId}/edit`} >
+                    {/* <Link to={`/spots/${spotId}/edit`} >
                         <button disabled={!sessionUser}>Update Spot</button>
-                    </Link>
+                    </Link> */}
 
                 </div>
             )}

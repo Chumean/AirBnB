@@ -65,7 +65,7 @@ const SpotDetails = () => {
         await history.push("/");
     };
 
-
+    console.log(reviews)
 
     // Add Review Modal
     const handleAddReviewModal = () => {
@@ -93,8 +93,14 @@ const SpotDetails = () => {
                 <div className="reserve-container-wrapper">
                     <div className="reserve-container">
 
-                        <div className="reserve-info">
+                        {/* <div className="reserve-info">
                             ${spots.price}  night  <i className="fa-solid fa-star"></i> {spots?.avgRating}  ({filteredReviews.length}) reviews
+                        </div> */}
+                        <div className="reserve-info">
+                         ${spots.price} night
+                        <i className="fa-solid fa-star"></i>
+                        {spots?.avgRating}
+                        ({filteredReviews.length === 1 ? "1 Review" : `${filteredReviews.length} Reviews`})
                         </div>
 
                         <div>
@@ -108,11 +114,14 @@ const SpotDetails = () => {
                     <div>
                     <h2>{filteredReviews.length === 1 ? "Review" : "Reviews"} ({filteredReviews.length === 0 ? "New" : filteredReviews.length})</h2>
                             {filteredReviews && (filteredReviews).map(review => (
-                            <div key={review.id}>
-                            <p>{review.review}</p>
-                            <p>{review.stars} stars</p>
+                            <div key={review?.id}>
+                            <p>{review?.User.firstName}</p>
+                            <p>{review?.review}</p>
+                            <p>{review?.stars} stars</p>
 
-                            <button onClick={() => handleDeleteReview(review.id, spots.id)} disabled={!sessionUser}>
+                            <button
+                            className="detail-review-delete"
+                             onClick={() => handleDeleteReview(review.id, spots.id)} disabled={!sessionUser}>
                             Delete Review
                             </button>
 

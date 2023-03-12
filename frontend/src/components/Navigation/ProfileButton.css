@@ -8,7 +8,7 @@ button.profile-button::before {
 
 /* PROFILE BUTTON */
 button.profile-button {
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     border: 1px solid #c1c1c1;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -21,6 +21,7 @@ button.profile-button {
     position: absolute;
     right:30px;
     top:10px;
+    cursor: pointer;
     /* box-shadow: 0 0 0 1px #c1c1c1; */
 
 }
@@ -57,11 +58,11 @@ button.profile-button:hover {
     border: 2px solid black;
     background-color: #fff;
     z-index: 999;
-    height: 180px;
+    height: auto;
     max-height: 300px;
+    width: 120px;
 
 }
-
 
 
 .hidden {
@@ -87,13 +88,9 @@ button.profile-button:hover {
 
 .profile-info {
     font-family: cursive;
-    color:red;
+
 }
 
-  /* .line {
-    border-bottom: 1px solid black;
-    margin: 10px 0;
-  } */
 
 .logout-button {
     background-color: #ccc;
@@ -103,3 +100,11 @@ button.profile-button:hover {
     padding: 10px 20px;
     cursor: pointer
 }
+
+.profile-button-options {
+    font-family: cursive;
+    cursor: pointer;
+}
+.profile-button-options :hover {
+    color: #FF5A5F;
+  }

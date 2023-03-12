@@ -14,3 +14,52 @@
 .my-manage-spots {
     font-family: cursive;
 } */
+
+.confirm-delete-review {
+    font-family: cursive;
+    margin-top:0;
+}
+
+.delete-modal-container {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.delete-review-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+
+}
+
+.yes-delete-review, .no-delete-review {
+    width: 190%;
+    padding: 1rem;
+    font-size: 1rem;
+    color: white;
+    border: 2px solid black;
+    box-shadow: 2px 2px 0px 2px rgba(0, 0, 0, 1);
+
+}
+
+.yes-delete-review {
+    background-color: #d9534f;
+}
+
+.no-delete-review {
+    background-color: darkgray;
+}
+
+.confirm-delete-review-msg {
+    font-family: cursive;
+    font-size: 17px;
+}
+.yes-delete-review:hover,
+.no-delete-review:hover {
+  cursor: pointer;
+}

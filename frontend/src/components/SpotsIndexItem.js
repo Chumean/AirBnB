@@ -1,17 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./SpotsIndex/SpotsIndex.css";
+import { useSelector } from "react-redux";
 
 
-const SpotsIndexItem = ({spot}) => {
+const SpotsIndexItem = ({spot, previewImage}) => {
 
     return (
-        <li key={`spot-${spot.id}`}>
-          <h2>{spot.name}</h2>
+        <li key={`spot-${spot.id}`} className="spot-card">
+          <Link to={`/spots/${spot.id}`}>
+            <div className="spot-image-wrapper"
+             style={{
+              backgroundImage: `url(${previewImage})`, // changed spot.previewImage to previewImage
+              cursor: "pointer",
+              borderRadius: "12px",
+
+            }}
+            title={spot.name}
+              ></div>
+          </Link>
+
           <p>{spot.city}, {spot.state}</p>
-          <p>Price: ${spot.price} per night</p>
-          <img src={spot.previewImage} alt={`Preview of ${spot.name}`} />
-          <div></div>
-          <Link to={`/spots/${spot.id}`}>View Spot</Link>
+          <p>${spot.price} night</p>
+
+          <div>
+          <p className="spot-avgRating">{spot.avgRating}</p>
+
+          </div>
+
         </li>
       );
 }

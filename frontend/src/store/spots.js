@@ -52,6 +52,7 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
   if(res.ok) {
     const details = await res.json();
     dispatch(addSpot(details))
+
   }
 
 }
@@ -70,6 +71,7 @@ export const createSpot = (spot) => async (dispatch) => {
     if (res.ok) {
       const data = await res.json();
       dispatch(addSpot(data));
+      dispatch(getAllSpots(data)) // tried to update state for new spots
       return data;
     }
 

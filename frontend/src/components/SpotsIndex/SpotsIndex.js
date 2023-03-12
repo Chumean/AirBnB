@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots } from '../../store/spots';
 import SpotsIndexItem from '../SpotsIndexItem';
+import "./SpotsIndex.css";
 
 function SpotsIndex() {
   const dispatch = useDispatch();
   const spots = useSelector(state => state.spots)
-  const spotsOBj = Object.values(spots);
-
+  const spotsObj = Object.values(spots);
 
 
   useEffect(() => {
@@ -16,14 +16,15 @@ function SpotsIndex() {
 
 
   return (
-    <div>
+    <div className='spots-container'>
       <h1>Spots</h1>
-      <ul>
-        {spotsOBj.map(spot => (
+      <ul className='spots-list'>
+        {spotsObj.map(spot => (
             <SpotsIndexItem
             key={spot.id}
             spot={spot}
-            spotsOBj={spotsOBj}
+            previewImage={spot.previewImage}
+            spotsOBj={spotsObj}
             />
         ))}
       </ul>

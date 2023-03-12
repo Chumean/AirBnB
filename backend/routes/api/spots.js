@@ -45,6 +45,10 @@ const validateSpots = [
     .exists({checkFalsy: true})
     .isNumeric()
     .withMessage('Price per day is required'),
+    check('previewImage')
+    .exists({checkFalsy: true})
+    .isString()
+    .withMessage("Preview Image is required."),
     handleValidationErrors
 ];
 
@@ -55,7 +59,7 @@ const validateReview = [
     .withMessage("Review text is required"),
     check('stars')
     .exists({checkFalsy: true})
-    .isDecimal()
+    .isFloat()
     .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors
 ];
@@ -79,8 +83,8 @@ const validateQuery = [
     check('page')
 
 ]
+
 // Get All Spots
-// to do add avgrating and preview image - DONE
 router.get('/', async (req, res) =>{
     let {page, size} = req.query;
 
@@ -106,23 +110,24 @@ router.get('/', async (req, res) =>{
             'lng',
             'name',
             'description',
-            'price'
+            'price',
+            'previewImage'
         ]
     });
 
     for await(let spot of spots) {
-    const previewImage = await SpotImage.findOne({
-        where: {
-            spotId: spot.id,
-            preview: true
-            }
-        })
+    // const previewImage = await SpotImage.findOne({
+    //     where: {
+    //         spotId: spot.id,
+    //         preview: true
+    //         }
+    //     })
 
-         if(previewImage) {
-        spot.dataValues.previewImage = previewImage.url
-        } else {
-        spot.dataValues.previewImage = null;
-        }
+        //  if(previewImage) {
+        // spot.dataValues.previewImage = previewImage.url
+        // } else {
+        // spot.dataValues.previewImage = null;
+        // }
 
         const rating = await Review.findAll({
         where: {
@@ -168,23 +173,24 @@ router.get('/current', requireAuth, async(req, res) =>{
             'lng',
             'name',
             'description',
-            'price'
+            'price',
+            'previewImage'
         ]
     });
 
     for await(let spot of ownerSpots) {
-        const previewImg = await SpotImage.findOne({
-            where: {
-                spotId: spot.id,
-                preview: true
-            }
-        })
+        // const previewImg = await SpotImage.findOne({
+        //     where: {
+        //         spotId: spot.id,
+        //         preview: true
+        //     }
+        // })
 
-        if(previewImg) {
-            spot.dataValues.previewImg = previewImg.url
-        } else {
-            spot.dataValues.previewImg = null;
-        }
+        // if(previewImg) {
+        //     spot.dataValues.previewImg = previewImg.url
+        // } else {
+        //     spot.dataValues.previewImg = null;
+        // }
 
         const rating = await Review.findAll({
             where: {
@@ -211,11 +217,7 @@ router.get('/current', requireAuth, async(req, res) =>{
 });
 
 // Get details of a Spot From An id
-// to do check for no spot id error
 router.get('/:spotId', async (req, res) => {
-
-
-    // const oneSpot = await Spot.findByPk(req.params.spotId);
 
     const oneSpot = await Spot.findByPk(req.params.spotId, {
         include: [
@@ -224,55 +226,8 @@ router.get('/:spotId', async (req, res) => {
             ]
         })
 
-    // const images = await SpotImage.findAll({
-    //         where: {
-    //             spotId: req.params.SpotImages.spotId
-    //         }
-    //     })
-
-    // oneSpot.dataValues.SpotImages = images;
-
-
-    // const previewImage = await SpotImage.findOne({
-    //         where: {
-    //             spotId: req.params.spotId,
-
-    //         }
-    //     })
-
-    // if(previewImage) {
-    //         oneSpot.previewImage = previewImage.url
-    //     } else {
-    //         oneSpot.previewImage = null;
-    //     }
-
     const user = await User.findByPk(req.params.userId);
 
-    // const owner = await User.findOne({
-    //     where: {
-    //         userId: req.params.ownerId
-    //     }
-    // })
-    //     oneSpot.dataValues.Owner = owner;
-
-    // const rating = await Review.findAll({
-    //         where: {spotId: oneSpot.id}
-    //     })
-
-    // let sum = 0;
-
-    // if(rating.length) {
-
-    //         rating.forEach(ele => {
-    //             sum += ele.stars
-    //         });
-
-    //         let avg = sum / rating.length
-
-    //         oneSpot.dataValues.avgRating = avg;
-    // } else {
-    //     oneSpot.dataValues.avgRating = null;
-    // }
 
     if(!oneSpot){
 
@@ -285,11 +240,11 @@ router.get('/:spotId', async (req, res) => {
 
 
 // Create a Spot DONE
-router.post('/', validateSpots, handleValidationErrors, async (req, res) => {
+router.post('/', validateSpots, handleValidationErrors, requireAuth, async (req, res) => {
 
-    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
 
-    const spot = await Spot.create({ address, city, state, country, lat, lng, name, description, price, ownerId: req.user.id});
+    const spot = await Spot.create({ address, city, state, country, lat, lng, name, description, price, ownerId: req.user.id, previewImage});
 
     return res.json(spot);
 
@@ -298,8 +253,7 @@ router.post('/', validateSpots, handleValidationErrors, async (req, res) => {
 
 
 // Add an Image to a Spot based on Spot's id
-// error check invalid spot id
-router.post('/:spotId/images', async(req, res) =>{
+router.post('/:spotId/images', requireAuth, async(req, res) =>{
 
     const currentSpot = await Spot.findByPk(req.params.spotId);
 

@@ -1,0 +1,17 @@
+.nav-ul {
+    list-style: none;
+}
+
+
+.create-spot-link {
+    position: absolute;
+    right: 150px;
+    top: 30px;
+
+}
+
+.create-spot-link a {
+    text-decoration: none;
+}
+
+

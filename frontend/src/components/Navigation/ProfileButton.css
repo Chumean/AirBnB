@@ -1,0 +1,66 @@
+button.profile-button::before {
+    content: "\f0c9";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+button.profile-button {
+    background-color: #ffffff;
+    border: 1px solid #c1c1c1;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right:30px;
+    top:10px;
+    /* box-shadow: 0 0 0 1px #c1c1c1; */
+
+}
+
+button i {
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #f6f6f6;
+}
+
+i.fa-user-circle {
+    font-size: 27px;
+    margin-right: 1px;
+    margin-left: 1px;
+}
+
+button.profile-button:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.on-click-menu {
+    font-size: 24px;
+}
+
+
+
+.profile-dropdown {
+    position: absolute;
+    right: 20px;
+}
+
+.profile-dropdown-card {
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.hidden {
+    display: none;
+}

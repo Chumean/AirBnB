@@ -20,12 +20,16 @@ const SpotDetails = () => {
     const spots = useSelector(state => {
 
         return state.spots[spotId]});
+
     const reviews = useSelector(state => state.reviews);
 
     const filteredReviews = Object.values(reviews).filter((review) => review?.spotId === spots?.id)
 
     const sessionUser = useSelector(state => state.session.user);
 
+    const sessionUserId = useSelector(state => state.session.user?.id);
+
+    console.log("REVIEWS", reviews);
     const {setModalContent} = useModal();
 
     // Render spot details and its reviews
@@ -53,7 +57,9 @@ const SpotDetails = () => {
 
 
     // Delete a review
-    const handleDeleteReview =  async (reviewId, spotId) => {
+    const handleDeleteReview =  async (reviewId, spotId, userId) => {
+        console.log("sessionUSER", sessionUserId)
+        console.log("REVIEW ID USER", reviews.userId)
         setModalContent(<DeleteReviewModal reviewId={reviewId} spotId={spotId} />);
         openModal();
     }
@@ -83,24 +89,32 @@ const SpotDetails = () => {
         <div>
             {spots && (
                 <div>
-                    <h2>{spots.name}</h2>
+                    <h2 className="detail-spot-name">{spots.name}</h2>
                     <p className="spot-location">{spots.city}, {spots.state}, {spots.country}</p>
                     <img src={spots.previewImage}/>
 
-                    <h2>Hosted By {spots.User?.firstName} {spots.User?.lastName}</h2>
+                    <h2 className="detail-host">Hosted By {spots.User?.firstName} {spots.User?.lastName}</h2>
                     <p>{spots.description}</p>
 
                 <div className="reserve-container-wrapper">
                     <div className="reserve-container">
 
+
                         {/* <div className="reserve-info">
-                            ${spots.price}  night  <i className="fa-solid fa-star"></i> {spots?.avgRating}  ({filteredReviews.length}) reviews
-                        </div> */}
-                        <div className="reserve-info">
                          ${spots.price} night
                         <i className="fa-solid fa-star"></i>
                         {spots?.avgRating}
                         ({filteredReviews.length === 1 ? "1 Review" : `${filteredReviews.length} Reviews`})
+                        </div> */}
+                        <div className="reserve-info">
+                        ${spots.price} night
+                        {spots?.avgRating && (
+                            <>
+                            <i className="fa-solid fa-star"></i>
+                            <span>{spots.avgRating.toFixed(1)}</span>
+                            </>
+                                )}
+                            ({filteredReviews.length === 1 ? "1 Review" : `${filteredReviews.length} Reviews`})
                         </div>
 
                         <div>
@@ -112,7 +126,7 @@ const SpotDetails = () => {
                     <hr style={{borderWidth: "1px", borderColor: "black"}}/>
 
                     <div>
-                    <h2>{filteredReviews.length === 1 ? "Review" : "Reviews"} ({filteredReviews.length === 0 ? "New" : filteredReviews.length})</h2>
+                    <h2> <i className="fa-solid fa-star"></i> {filteredReviews.length === 1 ? "Review" : "Reviews"} ({filteredReviews.length === 0 ? "New" : filteredReviews.length})</h2>
                             {filteredReviews && (filteredReviews).map(review => (
                             <div key={review?.id}>
                             <p>{review?.User.firstName}</p>

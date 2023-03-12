@@ -75,3 +75,11 @@
   align-items: center;
 
 }
+
+.detail-spot-name, .detail-host {
+  font-family: cursive;
+}
+
+h2 {
+  font-family: cursive;
+}

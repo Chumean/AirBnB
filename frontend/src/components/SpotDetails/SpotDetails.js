@@ -86,6 +86,7 @@ const SpotDetails = () => {
                     <p>{spots.description}</p>
 
                     <div className="reserve-container-wrapper">
+                    </div>
                         <div className="reserve-container">
 
                         <div className="reserve-info">
@@ -104,7 +105,7 @@ const SpotDetails = () => {
                         </div>
                     </div>
 
-                    </div>
+
                     <hr style={{borderWidth: "1px", borderColor: "black"}}/>
 
                     <div>

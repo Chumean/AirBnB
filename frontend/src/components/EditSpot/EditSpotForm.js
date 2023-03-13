@@ -2,15 +2,15 @@ import { useState } from 'react';
 import './EditSpot.css';
 
 const EditSpotForm = ({ spot, onSubmit }) => {
-  const [name, setName] = useState(spot.name);
-  const [address, setAddress] = useState(spot.address);
-  const [city, setCity] = useState(spot.city);
-  const [state, setState] = useState(spot.state);
-  const [country, setCountry] = useState(spot.country);
-  const [lat, setLat] = useState(spot.lat);
-  const [lng, setLng] = useState(spot.lng);
-  const [description, setDescription] = useState(spot.description);
-  const [price, setPrice] = useState(spot.price);
+  const [name, setName] = useState(spot?.name);
+  const [address, setAddress] = useState(spot?.address);
+  const [city, setCity] = useState(spot?.city);
+  const [state, setState] = useState(spot?.state);
+  const [country, setCountry] = useState(spot?.country);
+  const [lat, setLat] = useState(spot?.lat);
+  const [lng, setLng] = useState(spot?.lng);
+  const [description, setDescription] = useState(spot?.description);
+  const [price, setPrice] = useState(spot?.price);
 
   const handleSubmit = (e) => {
     e.preventDefault();

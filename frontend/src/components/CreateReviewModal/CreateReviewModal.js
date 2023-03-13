@@ -4,10 +4,9 @@ import { useDispatch } from "react-redux";
 import { addReview, createReview, getAllReviews } from "../../store/reviews";
 import { useSelector } from "react-redux";
 import './CreateReviewModal.css';
-import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
-import { Modal } from "../../context/Modal";
+// import TestStarRating from "../TestStarRating/TestStarRating";
 
-const CreateReviewModal = ({ spotId }) => {
+const CreateReviewModal = ({reviews, spotId }) => {
     const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user.id);
@@ -25,6 +24,7 @@ const CreateReviewModal = ({ spotId }) => {
     e.preventDefault();
 
     const newReviewInput = {
+      ...reviews,
       spotId: spotId,
       review: review,
       stars: stars,
@@ -41,10 +41,10 @@ const CreateReviewModal = ({ spotId }) => {
   };
 
   return (
-
     <>
       <form onSubmit={handleSubmit} className="add-review-form">
         <label className="review-textarea">
+
          <div className="how-stay">How was your stay?</div>
           <textarea
             placeholder="Leave your review here.."
@@ -64,6 +64,13 @@ const CreateReviewModal = ({ spotId }) => {
             onChange={(e) => setStars(e.target.value)}
           />
         </label>
+        {/* <label>
+        Stars:
+          <TestStarRating
+            rating={stars}
+            setRating={setStars}
+          />
+          </label> */}
 
         <button
         className="submit-review-button"

@@ -30,11 +30,7 @@ const SpotDetails = () => {
     // Searches if the spot belongs to the owner
     const isCurrentUserHost = spots?.ownerId === sessionUserId;
 
-    // console.log(spots.ownerId)
 
-    // console.log('sess user id', sessionUserId)
-
-    // console.log(isCurrentUserHost)
     const {setModalContent} = useModal();
 
     // Render spot details and its reviews
@@ -70,12 +66,13 @@ const SpotDetails = () => {
 
     // Add Review Modal
    const handleAddReviewModal = async (reviewId, spotId) => {
+
     setModalContent(<CreateReviewModal reviewId={reviewId} spotId={spotId} />)
    }
 
     // Create Review
     const handleAddReviewClick = () => {
-        setIsReviewFormVisible(true);
+        // setIsReviewFormVisible(true);
       };
 
 
@@ -130,11 +127,11 @@ const SpotDetails = () => {
                         </div>
                         ))}
 
-                        {/* {sessionUser && !isReviewFormVisible && (
+                        {/* {sessionUser && (
                         <CreateReview spotId={spotId} />
-                        )} */}
+                        )}
 
-                        {/* <button
+                        <button
                             onClick={handleAddReviewClick}
                             className="add-review-button"
                             disabled={!sessionUser || isCurrentUserHost}
@@ -142,6 +139,9 @@ const SpotDetails = () => {
                             Post Your Review
                         </button> */}
 
+                        {/* {sessionUser && (
+                            <CreateReviewModal spotId={spotId} />
+                        )} */}
                         <button
                         onClick={handleAddReviewModal}
                         className="add-review-modal"

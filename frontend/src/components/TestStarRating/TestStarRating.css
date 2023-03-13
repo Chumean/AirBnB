@@ -1,0 +1,23 @@
+.star {
+    /* font-size: 2rem; */
+    color: #e4e5e9;
+    cursor: pointer;
+    /* border: 1px solid #ccc; */
+    /* border-radius: 50%; */
+    /* padding: 0.5rem; */
+    /* margin-right: 1rem; */
+  }
+
+  .star:hover,
+  .star:hover ~ .star {
+    color: #ffc107;
+  }
+
+  .star.checked,
+  .star.checked ~ .star {
+    color: #ffc107;
+  }
+
+  .stars-input {
+    display:none;
+  }

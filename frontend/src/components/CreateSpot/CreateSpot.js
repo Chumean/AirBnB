@@ -60,7 +60,7 @@ const CreateSpot = ({spot = {}}) => {
 
     return (
         <div className='createspot-form-container'>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="create-form-layout">
             <h1 className='create-form-header'>Create A Spot</h1>
             <h2 className='create-form-header'>Where's your place located?</h2>
             <h4 className='create-form-header'>Guests will only get your exact address once they booked a reservation</h4>
@@ -77,6 +77,8 @@ const CreateSpot = ({spot = {}}) => {
                  />
             </label>
 
+            <hr className='spot-line-break' />
+
             <label className='spot-label'>
                 <h3>Address</h3>
                 <input
@@ -87,6 +89,8 @@ const CreateSpot = ({spot = {}}) => {
                 onChange={e => setAddress(e.target.value)}
                  />
             </label>
+
+
 
             <label className='spot-label'>
                 <h3>City</h3>
@@ -99,6 +103,8 @@ const CreateSpot = ({spot = {}}) => {
                  />
             </label>
 
+
+
             <label className='spot-label'>
                 <h3>State</h3>
                 <input
@@ -109,6 +115,8 @@ const CreateSpot = ({spot = {}}) => {
                 onChange={e => setState(e.target.value)}
                  />
             </label>
+
+
 
             <label className='spot-label'>
                 <h3>Country</h3>
@@ -122,7 +130,7 @@ const CreateSpot = ({spot = {}}) => {
             </label>
 
             <hr className='spot-line-break' />
-            
+
             <label className='spot-label'>
                 <h3>Latitude</h3>
                 <input
@@ -133,6 +141,8 @@ const CreateSpot = ({spot = {}}) => {
                 onChange={e => setLat(e.target.value)}
                  />
             </label>
+
+
 
             <label className='spot-label'>
                 <h3>Longitude</h3>
@@ -145,6 +155,8 @@ const CreateSpot = ({spot = {}}) => {
                  />
             </label>
 
+            <hr className='spot-line-break' />
+
             <label className='spot-label'>
 
                 <textarea
@@ -154,6 +166,8 @@ const CreateSpot = ({spot = {}}) => {
                 onChange={e => setDescription(e.target.value)}
                  />
             </label>
+
+            {/* <hr className='spot-line-break' /> */}
 
             <label className='spot-label'>
                 <h4>
@@ -168,7 +182,7 @@ const CreateSpot = ({spot = {}}) => {
                 onChange={e => setPrice(e.target.value)}
                  />
             </label>
-
+            <hr className='spot-line-break' />
             <label className='spot-label'>
 
                 <input
@@ -180,7 +194,7 @@ const CreateSpot = ({spot = {}}) => {
                 />
             </label>
 
-            <hr className='spot-line-break' />
+            {/* <hr className='spot-line-break' /> */}
 
             <button
             className='submit-spot'

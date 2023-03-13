@@ -30,6 +30,7 @@ const SpotDetails = () => {
     // Searches if the spot belongs to the owner
     const isCurrentUserHost = spots?.ownerId === sessionUserId;
 
+    console.log("CURRENT HOST IS USER", isCurrentUserHost)
 
     const {setModalContent} = useModal();
 
@@ -70,9 +71,8 @@ const SpotDetails = () => {
     setModalContent(<CreateReviewModal reviewId={reviewId} spotId={spotId} />)
    }
 
-    // Create Review
+    // Create Review Normal
     const handleAddReviewClick = () => {
-        // setIsReviewFormVisible(true);
       };
 
 
@@ -139,12 +139,13 @@ const SpotDetails = () => {
                             Post Your Review
                         </button> */}
 
-                        {/* {sessionUser && (
+                        {sessionUser && spotId && (
                             <CreateReviewModal spotId={spotId} />
-                        )} */}
+                        )}
                         <button
                         onClick={handleAddReviewModal}
                         className="add-review-modal"
+                        disabled={!sessionUser}
 
                         >Test</button>
                     </div>

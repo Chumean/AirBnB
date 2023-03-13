@@ -15,11 +15,7 @@
   }
 
   .spot-card {
-    /* background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    position: relative;
-    overflow: hidden; */
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -115,8 +111,27 @@
     white-space: nowrap;
     opacity: 0.8;
   }
-.spot-avgRating {
-    position: relative;
-    left: 220px;
-    bottom: 100px;
+.spot-info {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+
+h1 {
+  font-family: cursive;
+}
+
+span {
+  font-family: cursive;
+}
+
+p {
+  font-family: cursive;
+}
+
+a {
+  font-family: cursive;
 }

@@ -20,14 +20,13 @@ const SpotsIndexItem = ({spot, previewImage}) => {
               ></div>
           </Link>
 
-          <p>{spot.city}, {spot.state}</p>
+          {/* <span className="spot-info">{spot.city}, {spot.state} <i className="fa-solid fa-star"> {spot?.avgRating}</i>
+
+          </span> */}
+          <span className="spot-info">{spot.city}, {spot.state} {spot?.avgRating && <i className="fa-solid fa-star"> {spot.avgRating.toFixed(1)}</i>}
+
+          </span>
           <p>${spot.price} night</p>
-
-          <div>
-
-          <p className="spot-avgRating">{spot.avgRating}</p>
-
-          </div>
 
         </li>
       );

@@ -62,6 +62,7 @@
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
+    text-align: center;
   }
 
   .login-input {
@@ -72,6 +73,8 @@
     border: 2px solid black;
     box-sizing: border-box;
     margin-bottom: 20px;
+    position: relative;
+    left: 5px;
   }
 
   #modal-content h1 {
@@ -79,6 +82,9 @@
     margin-top: 0;
     margin-bottom: 1rem;
 
+  }
+  #modal-content {
+    border-radius: 20px;
   }
 
   .login-modal-card {
@@ -94,6 +100,8 @@
     display:block;
     background-color: #FF5A5F;
     color: white;
+    position: relative;
+    left: 5px;
   }
 
   .login-button:disabled {
@@ -105,9 +113,7 @@
     max-width: 400px;
   }
 
-  #modal-content {
-    border-radius: 20px;
-  }
+
 
   ul {
     list-style: none;
@@ -120,5 +126,11 @@
   width: 100%;
   padding: 0;
   margin: 0;
+  text-align: center;
+}
+
+.demo-button{
+  display: block;
+  margin: 20px auto 0;
   text-align: center;
 }

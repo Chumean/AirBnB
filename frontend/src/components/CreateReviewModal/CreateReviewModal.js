@@ -3,7 +3,9 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addReview, createReview, getAllReviews } from "../../store/reviews";
 import { useSelector } from "react-redux";
+import {useModal} from "../../context/Modal";
 import './CreateReviewModal.css';
+
 // import TestStarRating from "../TestStarRating/TestStarRating";
 
 const CreateReviewModal = ({reviews, spotId }) => {
@@ -15,6 +17,7 @@ const CreateReviewModal = ({reviews, spotId }) => {
   const [stars, setStars] = useState(0);
   const [error, setError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const {closeModal} = useModal();
 
   const handleModalClose = () => {
     setModalOpen(false);
@@ -38,6 +41,7 @@ const CreateReviewModal = ({reviews, spotId }) => {
       await dispatch(getAllReviews(spotId));
       history.push(`/spots/${spotId}`);
     }
+    closeModal();
   };
 
   return (
@@ -79,5 +83,7 @@ const CreateReviewModal = ({reviews, spotId }) => {
     </>
   );
 };
+
+
 
 export default CreateReviewModal;

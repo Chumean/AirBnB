@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addReview, createReview, getAllReviews } from "../../store/reviews";
 import StarRating from "../StarRating";
 import { useSelector } from "react-redux";
+import './CreateReview.css';
 
 const CreateReview = ({reviews, spotId}) => {
     const history = useHistory();
@@ -37,18 +38,18 @@ const CreateReview = ({reviews, spotId}) => {
 
     };
 
-    return (
+   return (
         <form onSubmit={handleSubmit}>
-            <label>
+            <label className="review-textarea">
                 Review
-                <input
-                    type="textarea"
+                <textarea
+                    className="textarea"
                     value={review}
                     onChange={e => setReview(e.target.value)}
                 />
             </label>
 
-            <label>
+            <label className="create-review-stars-input">
                 Stars
                 {/* <StarRating key={spotId} setStars={setStars} /> */}
                 <input

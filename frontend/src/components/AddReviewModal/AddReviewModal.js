@@ -1,29 +1,44 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addReview } from "../../store/reviews";
+import { addReview, createReview, getAllReviews } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
-// import "./AddReviewModal.css";
+import StarRating from "../StarRating";
+import { useHistory } from "react-router-dom";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 
-const AddReviewModal = ({ spotId }) => {
+const AddReviewModal = ({reviews, spotId }) => {
   const dispatch = useDispatch();
-  const { closeModal } = useModal();
+  const history = useHistory();
+  // const { closeModal } = useModal();
   const [review, setReview] = useState("");
   const [stars, setStars] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const payload = {
-      review,
-      stars,
-      spotId,
-    };
-    await dispatch(addReview(payload));
-    closeModal();
+  const handleStarsChange = (value) => {
+    setStars(value);
   };
 
-  const handleCancel = () => {
-    closeModal();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newReviewInput = {
+      ...reviews,
+      spotId: spotId,
+      review: review,
+      stars: stars
+
+  }
+
+  let newReview;
+  newReview = await dispatch(createReview(newReviewInput));
+
+  // if(newReview) {
+      await dispatch(addReview(newReview));
+      await dispatch(getAllReviews(spotId))
+      history.push(`/spots/${spotId}`);
   };
+
+  // const handleCancel = () => {
+  //   closeModal();
+  // };
 
   return (
     <div className="add-review-modal">
@@ -39,28 +54,17 @@ const AddReviewModal = ({ spotId }) => {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="stars">Stars</label>
-          <select
-            id="stars"
-            name="stars"
-            value={stars}
-            onChange={(e) => setStars(e.target.value)}
-            required
-          >
-            <option value="">-- Select --</option>
-            <option value="1">1 star</option>
-            <option value="2">2 stars</option>
-            <option value="3">3 stars</option>
-            <option value="4">4 stars</option>
-            <option value="5">5 stars</option>
-          </select>
+          <StarRating value={stars} onChange={handleStarsChange} />
         </div>
+
         <div className="form-actions">
           <button type="submit">Submit</button>
-          <button type="button" onClick={handleCancel}>
+          {/* <button type="button" onClick={handleCancel}>
             Cancel
-          </button>
+          </button> */}
         </div>
       </form>
     </div>

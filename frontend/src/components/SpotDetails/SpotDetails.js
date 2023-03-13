@@ -9,7 +9,7 @@ import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import DeleteSpotModal from "../DeleteSpotModal/DeleteSpotModal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import CreateReview from "../CreateReview/CreateReview";
-import AddReviewModal from "../AddReviewModal/AddReviewModal";
+import CreateReviewModal from "../CreateReviewModal/CreateReviewModal";
 import "./SpotDetails.css";
 
 
@@ -17,9 +17,7 @@ const SpotDetails = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const {spotId} = useParams();
-    const spots = useSelector(state => {
-
-        return state.spots[spotId]});
+    const spots = useSelector(state => state.spots[spotId]);
 
     const reviews = useSelector(state => state.reviews);
 
@@ -29,7 +27,14 @@ const SpotDetails = () => {
 
     const sessionUserId = useSelector(state => state.session.user?.id);
 
+    // Searches if the spot belongs to the owner
+    const isCurrentUserHost = spots?.ownerId === sessionUserId;
 
+    // console.log(spots.ownerId)
+
+    // console.log('sess user id', sessionUserId)
+
+    // console.log(isCurrentUserHost)
     const {setModalContent} = useModal();
 
     // Render spot details and its reviews
@@ -64,10 +69,9 @@ const SpotDetails = () => {
 
 
     // Add Review Modal
-    const handleAddReviewModal = () => {
-        setShowAddReviewModal(true);
-      };
-
+   const handleAddReviewModal = async (reviewId, spotId) => {
+    setModalContent(<CreateReviewModal reviewId={reviewId} spotId={spotId} />)
+   }
 
     // Create Review
     const handleAddReviewClick = () => {
@@ -126,17 +130,23 @@ const SpotDetails = () => {
                         </div>
                         ))}
 
-                        {sessionUser && !isReviewFormVisible && (
+                        {/* {sessionUser && !isReviewFormVisible && (
                         <CreateReview spotId={spotId} />
-                        )}
+                        )} */}
 
-                        <button
+                        {/* <button
                             onClick={handleAddReviewClick}
                             className="add-review-button"
-                            disabled={!sessionUser}
+                            disabled={!sessionUser || isCurrentUserHost}
                             >
                             Post Your Review
-                        </button>
+                        </button> */}
+
+                        <button
+                        onClick={handleAddReviewModal}
+                        className="add-review-modal"
+
+                        >Test</button>
                     </div>
 
 

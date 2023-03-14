@@ -39,7 +39,7 @@ const CreateReviewModal = ({reviews, spotId }) => {
     if (newReview) {
       await dispatch(addReview(newReview));
       await dispatch(getAllReviews(spotId));
-      history.push(`/spots/${spotId}`);
+      history.go(`/spots/${spotId}`);
     }
     closeModal();
   };

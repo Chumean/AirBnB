@@ -112,7 +112,7 @@ const SpotDetails = () => {
                         <h2> <i className="fa-solid fa-star"></i> {filteredReviews.length === 1 ? "Review" : "Reviews"} ({filteredReviews.length === 0 ? "New" : filteredReviews.length})</h2>
                             {filteredReviews && (filteredReviews).map(review => (
                             <div key={review?.id}>
-                            <p>{review?.User.firstName}</p>
+                            {/* <p>{review?.User.firstName}</p> */}
                             <p>{review?.review}</p>
                             <p>{review?.stars} stars</p>
 

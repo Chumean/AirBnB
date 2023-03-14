@@ -51,7 +51,7 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
 
   if(res.ok) {
     const details = await res.json();
-    
+
     dispatch(addSpot(details))
 
   }
